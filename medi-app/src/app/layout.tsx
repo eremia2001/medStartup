@@ -1,6 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
+import { RxHamburgerMenu } from 'react-icons/rx';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +19,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <header className='flex w-full h-max justify-between items-center p-2 bg-white border-b-2 border-[#F1F1F1] '>
+            <div>
+              <h2 className='font-bold text-2xl'>MEDICARRY.</h2>
+            </div>
+
+            <ul className='hidden md:flex gap-5 font-medium'>
+              <li>
+                <Link href="/">Funktionen</Link>
+              </li>
+              <li>
+              <Link href="/">Preise</Link>
+              </li>
+              <li>
+              <Link href="/">Über uns</Link> 
+              </li>
+            </ul>
+            <button className={`hidden md:block bg-primary text-md text-white rounded-md px-3 py-2`}>
+              Anmelden
+            </button>         
+            <RxHamburgerMenu size={25} className="md:hidden cursor-pointer"/>
+          </header>
+          {children}
+      </body>
+     
     </html>
+    
   )
 }
