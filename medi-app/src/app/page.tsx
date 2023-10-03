@@ -9,6 +9,8 @@ import Form from "./components/Form";
 import { useState } from "react";
 import { PiAirplaneLandingFill } from "react-icons/pi";
 import { MdMedication } from "react-icons/md";
+import { BsCheckCircleFill } from "react-icons/bs";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { GoNumber } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./components/Button";
@@ -19,16 +21,10 @@ export default function Home() {
   const [formNumber, setFormNumber] = useState(1);
   const [medicationInput, setMedicationInput] = useState("");
   const [medicationQuantInput, setMedicationQuantInput] = useState(0);
+  const [travelDurationInput, setTravelDurationInput] = useState("");
   const [allMeds, setAllMeds] = useState([{}]);
   const [medicationError, setMedicationError] = useState("");
   const [quantityError, setQuantityError] = useState("");
-
-  const show = {
-    opacity: 0,
-    transitionEnd: {
-      display: "none",
-    },
-  };
 
   const formList = [
     <Form
@@ -44,6 +40,23 @@ export default function Home() {
       key={1}
       id={1}
       functionality="countryInput"
+      handlePriorForm={switchToPriorForm}
+    />,
+    <Form
+      title="Wie lange dauert Ihr Aufenthalt ? "
+      inputFields={[
+        {
+          IconComponent: GoNumber,
+          placeholder: "Tage",
+          onInputChange: (e) => setTravelDurationInput(e.target.value),
+          inputType: "number",
+          value: travelDurationInput,
+        },
+      ]}
+      handleSumbitForm={switchToNextForm}
+      key={2}
+      id={2}
+      functionality="durationInput"
       handlePriorForm={switchToPriorForm}
     />,
     <Form
@@ -66,9 +79,9 @@ export default function Home() {
           errorMessage: quantityError,
         },
       ]}
-      handleSumbitForm={switchToNextForm}
-      key={2}
-      id={2}
+      handleSumbitForm={checkData}
+      key={3}
+      id={3}
       functionality="medicationInput"
       handlePriorForm={switchToPriorForm}
     >
@@ -95,21 +108,43 @@ export default function Home() {
       ))}
     </Form>,
     <Form
-      title="Dritte Form"
-      inputFields={[
-        {
-          IconComponent: PiAirplaneLandingFill,
-          placeholder: "Neues Input",
-          onInputChange: (e) => console.log(e.target.value),
-        },
-      ]}
+      title="Gute Reise ! "
+      inputFields={[]}
       handleSumbitForm={switchToNextForm}
-      key={3}
-      id={3}
+      key={4}
+      id={4}
       functionality="countryInput"
       handlePriorForm={switchToPriorForm}
-    />,
-    // Hier können Sie weitere Formen hinzufügen
+    >
+      <p className="text-subline mx-auto text-sm">
+        Unsere Datenbank hat keine Auffäligkeiten aufgezeigt
+      </p>
+      <BsCheckCircleFill className="mx-auto text-green-600 text-[150px] mt-10" />
+      <p className="text-subline mx-auto text-sm mt-5">
+        <span className="text-red-500 font-semibold">Hinweis : </span>
+        Medikamente in Originalverpackung mitführen & nehmen Sie zur Sicherheit
+        sofern benötigt immer ihren Medikamentenplan mit
+      </p>
+    </Form>,
+    <Form
+      title="Oh Nein ! "
+      inputFields={[]}
+      handleSumbitForm={switchToNextForm}
+      key={4}
+      id={4}
+      functionality="countryInput"
+      handlePriorForm={switchToPriorForm}
+    >
+      <p className="text-subline mx-auto text-sm">
+        Unsere Datenbank hat Auffäligkeiten aufgezeigt
+      </p>
+      <AiFillCloseCircle className="mx-auto text-error text-[150px] mt-10" />
+      <p className="text-subline mx-auto text-sm mt-5">
+        <span className="text-red-500 font-semibold">Hinweis : </span>
+        Medikamente in Originalverpackung mitführen & nehmen Sie zur Sicherheit
+        sofern benötigt immer ihren Medikamentenplan mit
+      </p>
+    </Form>,
   ];
 
   function switchToNextForm() {
@@ -162,6 +197,10 @@ export default function Home() {
     ]);
     setMedicationInput("");
     setMedicationQuantInput(0);
+  }
+
+  function checkData() {
+    switchToNextForm();
   }
 
   return (

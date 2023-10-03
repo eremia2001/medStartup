@@ -21,16 +21,18 @@ export default function Form({
       onSubmit={handleSubmit}
       className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[800px] mx-auto"
     >
-      <motion.div
-        onClick={handlePriorForm}
-        whileHover={{ scale: 1.3 }}
-        className="absolute left-5"
-      >
-        <FaArrowLeft
-          size={20}
-          className="text-secondary font-bold cursor-pointer"
-        />
-      </motion.div>
+      {id !== 1 && (
+        <motion.div
+          onClick={handlePriorForm}
+          whileHover={{ scale: 1.3 }}
+          className="absolute left-5"
+        >
+          <FaArrowLeft
+            size={20}
+            className="text-secondary font-bold cursor-pointer"
+          />
+        </motion.div>
+      )}
       <h1 className="mx-auto text-2xl lg:text-3xl">{title}</h1>
       <div className=" w-full grid grid-cols-fluid gap-3">
         {inputFields.map((field) => (
