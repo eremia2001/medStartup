@@ -9,7 +9,7 @@ import Form from "./components/Form";
 import { useState } from "react";
 import { PiAirplaneLandingFill } from "react-icons/pi";
 import { MdMedication } from "react-icons/md";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { BsCheckCircleFill, BsTrash } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { GoNumber } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,7 +22,7 @@ export default function Home() {
   const [medicationInput, setMedicationInput] = useState("");
   const [medicationQuantInput, setMedicationQuantInput] = useState(0);
   const [travelDurationInput, setTravelDurationInput] = useState("");
-  const [allMeds, setAllMeds] = useState([{}]);
+  const [allMeds, setAllMeds] = useState([]);
   const [medicationError, setMedicationError] = useState("");
   const [quantityError, setQuantityError] = useState("");
 
@@ -60,7 +60,7 @@ export default function Home() {
       handlePriorForm={switchToPriorForm}
     />,
     <Form
-      title="Welche Medikamente wollen sie mitnehmen ? "
+      title="Welche Medikamente wollen Sie mitnehmen ? "
       inputFields={[
         {
           IconComponent: MdMedication,
@@ -100,10 +100,16 @@ export default function Home() {
       {allMeds.map((med, index) => (
         <div
           key={index}
-          className="flex flex-row justify-between mt-5 font-medium"
+          className="flex flex-row justify-between mt-5 font-medium  "
         >
           <span> {med.medication}</span>
-          <span> {med.amount}</span>
+          <div className="flex items-center">
+            <span> {med.amount}</span>
+            <BsTrash
+              className="translate-x-10 cursor-pointer text-lg md:text-xl lg:text-2xl text-secondary "
+              onClick={() => deleteMed(index)}
+            />
+          </div>
         </div>
       ))}
     </Form>,
@@ -199,6 +205,13 @@ export default function Home() {
     setMedicationQuantInput(0);
   }
 
+  function deleteMed(medIndex) {
+    // Erstelle eine Kopie und keine REFERENZ
+    const newMedList = allMeds.slice();
+    newMedList.splice(medIndex, 1);
+    setAllMeds(newMedList);
+  }
+
   function checkData() {
     switchToNextForm();
   }
@@ -257,7 +270,7 @@ export default function Home() {
         alt="."
         width={500}
         height={500}
-        className="absolute bottom-20 right-2 hidden xl:block"
+        className="absolute bottom-20 right-2 hidden xl:block z-0"
       />
     </main>
   );

@@ -19,7 +19,7 @@ export default function Form({
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[800px] mx-auto"
+      className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[800px] mx-auto z-50"
     >
       {id !== 1 && (
         <motion.div
