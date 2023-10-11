@@ -187,6 +187,7 @@ export default function Home() {
   }
 
   function addMedication() {
+    // TODO : adding backend Logic
     setMedicationError("");
     setQuantityError("");
     const { medicationError, quantityError } = validateInputs();
@@ -206,6 +207,7 @@ export default function Home() {
   }
 
   function deleteMed(medIndex) {
+    // TODO : adding backend Logic
     // Erstelle eine Kopie und keine REFERENZ
     const newMedList = allMeds.slice();
     newMedList.splice(medIndex, 1);
