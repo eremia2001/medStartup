@@ -36,15 +36,15 @@ export default function Form({
       const type = inputField.inputType;
       const value = inputField.value;
       const name = inputField.name;
+      console.log("Value of validateInput" + value);
 
-      if (type == "text" && !value) {
+      if (type == "select" && value == "") {
+        errors[name] = "Eine Auswahl ist erforderlich";
+      } else if (type == "text" && (!value || value.trim() === "")) {
         errors[name] = "Eingabe darf nicht leer sein";
-      }
-      if (type == "number" && value <= 0) {
+      } else if (type == "number" && (value <= 0 || value === "")) {
         errors[name] = "Eingabe muss größer als 0 sein";
       }
-
-      console.log(errors);
     });
 
     return errors;

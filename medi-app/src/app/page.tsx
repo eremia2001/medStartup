@@ -17,6 +17,8 @@ import Button from "./components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMedication } from "./hooks/useMedication";
+import { countries } from "./data/countries";
+import { medications } from "./data/medications";
 
 export default function Home() {
   const [btnClicked, setBtnClicked] = useState(false);
@@ -42,8 +44,9 @@ export default function Home() {
           placeholder: "Flug",
           name: "country",
           value: formInput.country,
-          inputType: "text",
-          onInputChange: handleInput,
+          inputType: "select",
+          onInputChange: handleSelectChange,
+          selectOptions: countries,
         },
       ]}
       handleSumbitForm={switchToNextForm}
@@ -76,11 +79,12 @@ export default function Home() {
         {
           IconComponent: MdMedication,
           placeholder: "Medikamente",
-          inputType: "text",
+          inputType: "select",
           value: formInput.medication,
           name: "medication",
-          onInputChange: handleInput,
+          onInputChange: handleSelectChange,
           addingError: errorMsg.medicationError,
+          selectOptions: medications,
         },
         {
           IconComponent: GoNumber,
@@ -166,6 +170,9 @@ export default function Home() {
       </p>
     </Form>,
   ];
+  function handleSelectChange(value, name) {
+    setFormInput({ ...formInput, [name]: value });
+  }
 
   function handleInput(e) {
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
