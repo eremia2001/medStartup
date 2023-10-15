@@ -10,11 +10,12 @@ function InputField({
   value,
   errorMessage,
   className,
+  name,
 }) {
   return (
-    <div>
+    <div className={`${className}`}>
       <div
-        className={`p-2 flex flex-row gap-2 items-center border-2 border-[#D3E7FF] rounded-lg mt-10 max-w-[350px] select-none ${className}`}
+        className={`p-2 flex flex-row gap-2 items-center border-2 border-[#D3E7FF] rounded-lg mt-10 max-w-[350px] select-none `}
       >
         {IconComponent && <IconComponent color="#6C63FF" size={30} />}
         <input
@@ -24,10 +25,11 @@ function InputField({
           placeholder={placeholder}
           onChange={onInputChange}
           className="w-full outline-none"
+          name={name}
         />
       </div>
       {errorMessage ? (
-        <p className="text-error font-medium">{errorMessage}</p>
+        <p className="text-error font-medium ">{errorMessage}</p>
       ) : (
         ""
       )}

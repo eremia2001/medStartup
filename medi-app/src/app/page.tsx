@@ -16,15 +16,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "./components/Button";
 
 export default function Home() {
-  const [country, setCountry] = useState("");
   const [btnClicked, setBtnClicked] = useState(false);
   const [formNumber, setFormNumber] = useState(1);
-  const [medicationInput, setMedicationInput] = useState("");
-  const [medicationQuantInput, setMedicationQuantInput] = useState(0);
-  const [travelDurationInput, setTravelDurationInput] = useState("");
   const [allMeds, setAllMeds] = useState([]);
-  const [medicationError, setMedicationError] = useState("");
-  const [quantityError, setQuantityError] = useState("");
+  const [formInput, setFormInput] = useState({
+    medication: "",
+    medicationQuant: 0,
+    travelDuration: "",
+    country: "",
+  });
 
   const formList = [
     <Form
@@ -33,7 +33,10 @@ export default function Home() {
         {
           IconComponent: PiAirplaneLandingFill,
           placeholder: "Flug",
-          onInputChange: (e) => setCountry(e.target.value),
+          name: "country",
+          value: formInput.country,
+          inputType: "text",
+          onInputChange: handleInput,
         },
       ]}
       handleSumbitForm={switchToNextForm}
@@ -48,9 +51,10 @@ export default function Home() {
         {
           IconComponent: GoNumber,
           placeholder: "Tage",
-          onInputChange: (e) => setTravelDurationInput(e.target.value),
+          name: "travelDuration",
+          onInputChange: handleInput,
           inputType: "number",
-          value: travelDurationInput,
+          value: formInput.travelDuration,
         },
       ]}
       handleSumbitForm={switchToNextForm}
@@ -66,17 +70,17 @@ export default function Home() {
           IconComponent: MdMedication,
           placeholder: "Medikamente",
           inputType: "text",
-          value: medicationInput,
-          onInputChange: (e) => setMedicationInput(e.target.value),
-          errorMessage: medicationError,
+          value: formInput.medication,
+          name: "medication",
+          onInputChange: handleInput,
         },
         {
           IconComponent: GoNumber,
           placeholder: "Anzahl",
           inputType: "number",
-          value: medicationQuantInput,
-          onInputChange: (e) => setMedicationQuantInput(e.target.value),
-          errorMessage: quantityError,
+          value: formInput.medicationQuant,
+          name: "medicationQuant",
+          onInputChange: handleInput,
         },
       ]}
       handleSumbitForm={checkData}
@@ -87,6 +91,7 @@ export default function Home() {
     >
       <button
         onClick={addMedication}
+        type="button"
         className="mt-5 bg-secondary text-3xl font-bold text-white rounded-lg w-fit px-3 "
       >
         +
@@ -153,6 +158,14 @@ export default function Home() {
     </Form>,
   ];
 
+  function handleSumbitForm(e) {
+    console.log(e.target.name);
+  }
+
+  function handleInput(e) {
+    setFormInput({ ...formInput, [e.target.name]: e.target.value });
+  }
+
   function switchToNextForm() {
     setBtnClicked(true);
     setTimeout(() => {
@@ -169,42 +182,28 @@ export default function Home() {
     }, 200); // Wartezeit bis zur nächsten Form
   }
 
-  function validateInputs() {
-    let errors = {
-      medicationError: "",
-      quantityError: "",
-    };
-
-    if (!medicationInput) {
-      errors.medicationError = "Medikament darf nicht leer sein!";
-    }
-
-    if (medicationQuantInput <= 0) {
-      errors.quantityError = "Anzahl muss größer als 0 sein!";
-    }
-
-    return errors;
-  }
-
   function addMedication() {
     // TODO : adding backend Logic
-    setMedicationError("");
-    setQuantityError("");
-    const { medicationError, quantityError } = validateInputs();
-
-    if (medicationError || quantityError) {
-      setMedicationError(medicationError);
-      setQuantityError(quantityError);
-      return;
-    }
-
-    setAllMeds((prevMeds) => [
-      ...prevMeds,
-      { medication: medicationInput, amount: medicationQuantInput },
-    ]);
-    setMedicationInput("");
-    setMedicationQuantInput(0);
+    // setErrorMsg({ ...errorMsg, medication: "", medicationQuant: "" });
+    // let medicationError = "";
+    // let quantityError = "";
+    // medicationError = validateInputs("medication", "text");
+    // quantityError = validateInputs("medicationQuant", "text");
+    // if (medicationError || quantityError) {
+    //   setErrorMsg({
+    //     ...errorMsg,
+    //     medication: medicationError,
+    //     medicationQuant: quantityError,
+    //   });
+    //   return;
   }
+
+  //   setAllMeds((prevMeds) => [
+  //     ...prevMeds,
+  //     { medication: formInput.medication, amount: formInput.medicationQuant },
+  //   ]);
+  //   setFormInput({ ...formInput, medication: "", medicationQuant: 0 });
+  // }
 
   function deleteMed(medIndex) {
     // TODO : adding backend Logic
@@ -215,7 +214,9 @@ export default function Home() {
   }
 
   function checkData() {
-    switchToNextForm();
+    if (allMeds.length > 0) {
+      switchToNextForm();
+    }
   }
 
   return (

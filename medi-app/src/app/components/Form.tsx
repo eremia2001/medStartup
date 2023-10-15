@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import InputField from "./InputField";
 import { FormProps } from "../types";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Form({
   title,
@@ -13,9 +14,52 @@ export default function Form({
   handlePriorForm,
   children,
 }) {
+  const [errors, setErrors] = useState({});
+
+  // Eine Form kann mehrere Inputs haben und ich will für jede eine Validierung haben
+  function isEmpty(obj) {
+    for (let prop in obj) {
+      // Hat das Objekt eine eigene Eigenschaft?
+      if (obj.hasOwnProperty(prop)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function validateInputs() {
+    // Wir gehen jeden Input durch
+    let errors = {};
+    inputFields.map((inputField) => {
+      // Validierung basierend auf dem inputType
+      const type = inputField.inputType;
+      const value = inputField.value;
+      const name = inputField.name;
+
+      if (type == "text" && !value) {
+        errors[name] = "Eingabe darf nicht leer sein";
+      }
+      if (type == "number" && value <= 0) {
+        errors[name] = "Eingabe muss größer als 0 sein";
+      }
+
+      console.log(errors);
+    });
+
+    return errors;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validateInputs();
+
+    if (isEmpty(validationErrors)) {
+      handleSumbitForm(); // Slide nur wenn die Validatoren stimmen
+    } else {
+      setErrors(validationErrors);
+    }
   };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -36,7 +80,12 @@ export default function Form({
       <h1 className="mx-auto text-2xl lg:text-3xl">{title}</h1>
       <div className=" w-full grid grid-cols-fluid gap-3">
         {inputFields.map((field) => (
-          <InputField className="mx-auto" key={field.placeholder} {...field} />
+          <InputField
+            className={`${inputFields.length === 1 ? "mx-auto" : ""}`}
+            key={field.placeholder}
+            errorMessage={errors[field.name]}
+            {...field}
+          />
         ))}
       </div>
       {children}
@@ -44,7 +93,7 @@ export default function Form({
         title="Weiter"
         bgColor="secondary"
         className="mt-16 px-20 mx-auto"
-        handleBtnClick={handleSumbitForm}
+        handleBtnClick={handleSubmit}
       />
     </form>
   );
