@@ -11,6 +11,7 @@ function InputField({
   errorMessage,
   className,
   name,
+  addingError,
 }) {
   return (
     <div className={`${className}`}>
@@ -30,6 +31,11 @@ function InputField({
       </div>
       {errorMessage ? (
         <p className="text-error font-medium ">{errorMessage}</p>
+      ) : (
+        ""
+      )}
+      {addingError ? (
+        <p className="text-error font-medium ">{addingError}</p>
       ) : (
         ""
       )}

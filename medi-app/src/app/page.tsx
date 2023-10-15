@@ -14,6 +14,8 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { GoNumber } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./components/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [btnClicked, setBtnClicked] = useState(false);
@@ -24,6 +26,10 @@ export default function Home() {
     medicationQuant: 0,
     travelDuration: "",
     country: "",
+  });
+  const [errorMsg, setErrorMsg] = useState({
+    medicationError: "",
+    quantityError: "",
   });
 
   const formList = [
@@ -73,6 +79,7 @@ export default function Home() {
           value: formInput.medication,
           name: "medication",
           onInputChange: handleInput,
+          addingError: errorMsg.medicationError,
         },
         {
           IconComponent: GoNumber,
@@ -81,6 +88,7 @@ export default function Home() {
           value: formInput.medicationQuant,
           name: "medicationQuant",
           onInputChange: handleInput,
+          addingError: errorMsg.quantityError,
         },
       ]}
       handleSumbitForm={checkData}
@@ -184,26 +192,32 @@ export default function Home() {
 
   function addMedication() {
     // TODO : adding backend Logic
-    // setErrorMsg({ ...errorMsg, medication: "", medicationQuant: "" });
-    // let medicationError = "";
-    // let quantityError = "";
-    // medicationError = validateInputs("medication", "text");
-    // quantityError = validateInputs("medicationQuant", "text");
-    // if (medicationError || quantityError) {
-    //   setErrorMsg({
-    //     ...errorMsg,
-    //     medication: medicationError,
-    //     medicationQuant: quantityError,
-    //   });
-    //   return;
-  }
+    setErrorMsg({ ...errorMsg, medicationError: "", quantityError: "" });
+    let medicationError = "";
+    let quantityError = "";
 
-  //   setAllMeds((prevMeds) => [
-  //     ...prevMeds,
-  //     { medication: formInput.medication, amount: formInput.medicationQuant },
-  //   ]);
-  //   setFormInput({ ...formInput, medication: "", medicationQuant: 0 });
-  // }
+    if (formInput.medication == "") {
+      medicationError = "Eingabe darf nicht leer sein";
+    }
+
+    if (formInput.medicationQuant == 0) {
+      quantityError = "Eingabe muss größer als 0 sein";
+    }
+
+    if (medicationError || quantityError) {
+      setErrorMsg({
+        ...errorMsg,
+        medicationError: medicationError,
+        quantityError: quantityError,
+      });
+    } else {
+      setAllMeds((prevMeds) => [
+        ...prevMeds,
+        { medication: formInput.medication, amount: formInput.medicationQuant },
+      ]);
+      setFormInput({ ...formInput, medication: "", medicationQuant: 0 });
+    }
+  }
 
   function deleteMed(medIndex) {
     // TODO : adding backend Logic
@@ -213,14 +227,41 @@ export default function Home() {
     setAllMeds(newMedList);
   }
 
-  function checkData() {
+  function checkData(e) {
+    e.preventDefault();
+    console.log(allMeds.length);
     if (allMeds.length > 0) {
+      if (formInput.medication || formInput.medicationQuant) {
+        toast.warn("🤔 Hast du vergessen das Medikament einzutragen ? ", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        return;
+      }
       switchToNextForm();
+    } else {
+      toast.warn("😦 OH OH ! Du hast kein Medikament eingetragen", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   }
 
   return (
     <main className="flex min-h-screen px-4 flex-col bg-[#F9F9F9] relative">
+      <ToastContainer />
       <div className="flex flex-col items-center gap-4 mx-auto mt-20  ">
         <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold">
           Willkommen bei Medicarry !{" "}

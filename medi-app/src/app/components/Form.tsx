@@ -13,6 +13,7 @@ export default function Form({
   id,
   handlePriorForm,
   children,
+  functionality,
 }) {
   const [errors, setErrors] = useState({});
 
@@ -54,7 +55,7 @@ export default function Form({
     const validationErrors = validateInputs();
 
     if (isEmpty(validationErrors)) {
-      handleSumbitForm(); // Slide nur wenn die Validatoren stimmen
+      handleSumbitForm(); // FormSumbit nur wenn die Validatoren stimmen
     } else {
       setErrors(validationErrors);
     }
@@ -62,7 +63,9 @@ export default function Form({
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={
+        functionality == "medicationInput" ? handleSumbitForm : handleSubmit
+      }
       className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[800px] mx-auto z-50"
     >
       {id !== 1 && (
@@ -93,7 +96,6 @@ export default function Form({
         title="Weiter"
         bgColor="secondary"
         className="mt-16 px-20 mx-auto"
-        handleBtnClick={handleSubmit}
       />
     </form>
   );
