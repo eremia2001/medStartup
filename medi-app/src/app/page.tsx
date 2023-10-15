@@ -16,11 +16,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "./components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useMedication } from "./hooks/useMedication";
 
 export default function Home() {
   const [btnClicked, setBtnClicked] = useState(false);
   const [formNumber, setFormNumber] = useState(1);
-  const [allMeds, setAllMeds] = useState([]);
   const [formInput, setFormInput] = useState({
     medication: "",
     medicationQuant: 0,
@@ -31,6 +31,7 @@ export default function Home() {
     medicationError: "",
     quantityError: "",
   });
+  const { allMeds, addMedication, deleteMed } = useMedication();
 
   const formList = [
     <Form
@@ -98,7 +99,7 @@ export default function Home() {
       handlePriorForm={switchToPriorForm}
     >
       <button
-        onClick={addMedication}
+        onClick={checkMedication}
         type="button"
         className="mt-5 bg-secondary text-3xl font-bold text-white rounded-lg w-fit px-3 "
       >
@@ -166,10 +167,6 @@ export default function Home() {
     </Form>,
   ];
 
-  function handleSumbitForm(e) {
-    console.log(e.target.name);
-  }
-
   function handleInput(e) {
     setFormInput({ ...formInput, [e.target.name]: e.target.value });
   }
@@ -190,7 +187,7 @@ export default function Home() {
     }, 200); // Wartezeit bis zur nächsten Form
   }
 
-  function addMedication() {
+  function checkMedication() {
     // TODO : adding backend Logic
     setErrorMsg({ ...errorMsg, medicationError: "", quantityError: "" });
     let medicationError = "";
@@ -211,20 +208,9 @@ export default function Home() {
         quantityError: quantityError,
       });
     } else {
-      setAllMeds((prevMeds) => [
-        ...prevMeds,
-        { medication: formInput.medication, amount: formInput.medicationQuant },
-      ]);
+      addMedication(formInput.medication, formInput.medicationQuant);
       setFormInput({ ...formInput, medication: "", medicationQuant: 0 });
     }
-  }
-
-  function deleteMed(medIndex) {
-    // TODO : adding backend Logic
-    // Erstelle eine Kopie und keine REFERENZ
-    const newMedList = allMeds.slice();
-    newMedList.splice(medIndex, 1);
-    setAllMeds(newMedList);
   }
 
   function checkData(e) {
