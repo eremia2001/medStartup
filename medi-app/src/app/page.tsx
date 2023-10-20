@@ -1,255 +1,99 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import { RxHamburgerMenu } from "react-icons/rx";
 import WomanIlustration from "./assets/illustration woman.png";
 import WomanIlustration2 from "./assets/illustration woman2.png";
 import crosses from "./assets/kreuze.png";
-import Form from "./components/Form";
-import { useState } from "react";
-import { PiAirplaneLandingFill } from "react-icons/pi";
-import { MdMedication } from "react-icons/md";
-import { BsCheckCircleFill, BsTrash } from "react-icons/bs";
-import { AiFillCloseCircle } from "react-icons/ai";
-import { GoNumber } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
-import Button from "./components/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMedication } from "./hooks/useMedication";
-import { countries } from "./data/countries";
-import { medications } from "./data/medications";
+import { useFormHandling } from "./hooks/useFormHandling";
+import { useToast } from "./hooks/useToast";
+import {
+  CountryForm,
+  DurationForm,
+  MedicationForm,
+  GuteReiseForm,
+  WarnungForm,
+} from "./components/formComponents";
 
 export default function Home() {
-  const [btnClicked, setBtnClicked] = useState(false);
-  const [formNumber, setFormNumber] = useState(1);
-  const [formInput, setFormInput] = useState({
-    medication: "",
-    medicationQuant: 0,
-    travelDuration: "",
-    country: "",
-  });
-  const [errorMsg, setErrorMsg] = useState({
-    medicationError: "",
-    quantityError: "",
-  });
-  const { allMeds, addMedication, deleteMed } = useMedication();
+  const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
+  const { showToast } = useToast();
+  const {
+    formInput,
+    handleSelectChange,
+    handleInput,
+    switchToNextForm,
+    switchToPriorForm,
+    formNumber,
+    setFormInput,
+  } = useFormHandling();
 
   const formList = [
-    <Form
-      title="Wohin wollen Sie reisen ?"
-      inputFields={[
-        {
-          IconComponent: PiAirplaneLandingFill,
-          placeholder: "Flug",
-          name: "country",
-          value: formInput.country,
-          inputType: "select",
-          onInputChange: handleSelectChange,
-          selectOptions: countries,
-        },
-      ]}
+    <CountryForm
+      inputValue={formInput.country}
+      onInputChange={handleSelectChange}
       handleSumbitForm={switchToNextForm}
-      key={1}
-      id={1}
-      functionality="countryInput"
       handlePriorForm={switchToPriorForm}
     />,
-    <Form
-      title="Wie lange dauert Ihr Aufenthalt ? "
-      inputFields={[
-        {
-          IconComponent: GoNumber,
-          placeholder: "Tage",
-          name: "travelDuration",
-          onInputChange: handleInput,
-          inputType: "number",
-          value: formInput.travelDuration,
-        },
-      ]}
+    <DurationForm
+      inputValue={formInput.travelDuration}
+      onInputChange={handleInput}
       handleSumbitForm={switchToNextForm}
-      key={2}
-      id={2}
-      functionality="durationInput"
       handlePriorForm={switchToPriorForm}
     />,
-    <Form
-      title="Welche Medikamente wollen Sie mitnehmen ? "
-      inputFields={[
-        {
-          IconComponent: MdMedication,
-          placeholder: "Medikamente",
-          inputType: "select",
-          value: formInput.medication,
-          name: "medication",
-          onInputChange: handleSelectChange,
-          addingError: errorMsg.medicationError,
-          selectOptions: medications,
-        },
-        {
-          IconComponent: GoNumber,
-          placeholder: "Anzahl",
-          inputType: "number",
-          value: formInput.medicationQuant,
-          name: "medicationQuant",
-          onInputChange: handleInput,
-          addingError: errorMsg.quantityError,
-        },
-      ]}
-      handleSumbitForm={checkData}
-      key={3}
-      id={3}
-      functionality="medicationInput"
+    <MedicationForm
+      formInput={formInput}
+      handleSelectChange={handleSelectChange}
+      handleInput={handleInput}
+      handlingMedForm={handlingMedForm}
       handlePriorForm={switchToPriorForm}
-    >
-      <button
-        onClick={checkMedication}
-        type="button"
-        className="mt-5 bg-secondary text-3xl font-bold text-white rounded-lg w-fit px-3 "
-      >
-        +
-      </button>
-
-      <div className="flex flex-row justify-between mt-5 font-bold">
-        <span>Medikament </span>
-        <span> Anzahl </span>
-      </div>
-
-      {allMeds.map((med, index) => (
-        <div
-          key={index}
-          className="flex flex-row justify-between mt-5 font-medium  "
-        >
-          <span> {med.medication}</span>
-          <div className="flex items-center">
-            <span> {med.amount}</span>
-            <BsTrash
-              className="translate-x-10 cursor-pointer text-lg md:text-xl lg:text-2xl text-secondary "
-              onClick={() => deleteMed(index)}
-            />
-          </div>
-        </div>
-      ))}
-    </Form>,
-    <Form
-      title="Gute Reise ! "
-      inputFields={[]}
+      checkMedication={checkMedication}
+      allMeds={allMeds}
+      deleteMed={deleteMed}
+      errorMsg={errorMsg}
+    />,
+    <GuteReiseForm
       handleSumbitForm={switchToNextForm}
-      key={4}
-      id={4}
-      functionality="countryInput"
       handlePriorForm={switchToPriorForm}
-    >
-      <p className="text-subline mx-auto text-sm">
-        Unsere Datenbank hat keine Auffäligkeiten aufgezeigt
-      </p>
-      <BsCheckCircleFill className="mx-auto text-green-600 text-[150px] mt-10" />
-      <p className="text-subline mx-auto text-sm mt-5">
-        <span className="text-red-500 font-semibold">Hinweis : </span>
-        Medikamente in Originalverpackung mitführen & nehmen Sie zur Sicherheit
-        sofern benötigt immer ihren Medikamentenplan mit
-      </p>
-    </Form>,
-    <Form
-      title="Oh Nein ! "
-      inputFields={[]}
+    />,
+    <WarnungForm
       handleSumbitForm={switchToNextForm}
-      key={4}
-      id={4}
-      functionality="countryInput"
       handlePriorForm={switchToPriorForm}
-    >
-      <p className="text-subline mx-auto text-sm">
-        Unsere Datenbank hat Auffäligkeiten aufgezeigt
-      </p>
-      <AiFillCloseCircle className="mx-auto text-error text-[150px] mt-10" />
-      <p className="text-subline mx-auto text-sm mt-5">
-        <span className="text-red-500 font-semibold">Hinweis : </span>
-        Medikamente in Originalverpackung mitführen & nehmen Sie zur Sicherheit
-        sofern benötigt immer ihren Medikamentenplan mit
-      </p>
-    </Form>,
+    />,
   ];
-  function handleSelectChange(value, name) {
-    setFormInput({ ...formInput, [name]: value });
-  }
-
-  function handleInput(e) {
-    setFormInput({ ...formInput, [e.target.name]: e.target.value });
-  }
-
-  function switchToNextForm() {
-    setBtnClicked(true);
-    setTimeout(() => {
-      setFormNumber(formNumber + 1); // Nächste Form anzeigen
-      setBtnClicked(false); // Animation zurücksetzen
-    }, 200); // Wartezeit bis zur nächsten Form
-  }
-
-  function switchToPriorForm() {
-    setBtnClicked(true);
-    setTimeout(() => {
-      setFormNumber(formNumber - 1); // Nächste Form anzeigen
-      setBtnClicked(false); // Animation zurücksetzen
-    }, 200); // Wartezeit bis zur nächsten Form
-  }
 
   function checkMedication() {
-    // TODO : adding backend Logic
-    setErrorMsg({ ...errorMsg, medicationError: "", quantityError: "" });
-    let medicationError = "";
-    let quantityError = "";
-
-    if (formInput.medication == "") {
-      medicationError = "Eingabe darf nicht leer sein";
-    }
-
-    if (formInput.medicationQuant == 0) {
-      quantityError = "Eingabe muss größer als 0 sein";
-    }
-
-    if (medicationError || quantityError) {
-      setErrorMsg({
-        ...errorMsg,
-        medicationError: medicationError,
-        quantityError: quantityError,
-      });
-    } else {
-      addMedication(formInput.medication, formInput.medicationQuant);
-      setFormInput({ ...formInput, medication: "", medicationQuant: 0 });
+    // TODO: adding backend Logic
+    // Füge Medikament hinzu und setze die Formulareingabe zurück
+    const isAdded = addMedication(
+      formInput.medication,
+      formInput.medicationQuant
+    );
+    if (isAdded) {
+      setFormInput((prevFormInput) => ({
+        ...prevFormInput,
+        medication: "",
+        medicationQuant: 0,
+      }));
     }
   }
 
-  function checkData(e) {
+  function handlingMedForm(e) {
     e.preventDefault();
-    console.log(allMeds.length);
-    if (allMeds.length > 0) {
-      if (formInput.medication || formInput.medicationQuant) {
-        toast.warn("🤔 Hast du vergessen das Medikament einzutragen ? ", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        return;
-      }
-      switchToNextForm();
-    } else {
-      toast.warn("😦 OH OH ! Du hast kein Medikament eingetragen", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+    if (allMeds.length === 0) {
+      showToast("😦 OH OH ! Du hast kein Medikament eingetragen");
+      return;
     }
+    const isMedInputEmpty = !formInput.medication && !formInput.medicationQuant;
+
+    if (!isMedInputEmpty) {
+      showToast("🤔 Hast du vergessen das Medikament einzutragen ?");
+      return;
+    }
+
+    switchToNextForm();
   }
 
   return (
