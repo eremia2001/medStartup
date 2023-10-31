@@ -1,23 +1,26 @@
-"use client";
-import Image from "next/image";
-import WomanIlustration from "./assets/illustration woman.png";
-import WomanIlustration2 from "./assets/illustration woman2.png";
-import crosses from "./assets/kreuze.png";
-import { motion, AnimatePresence } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useMedication } from "./hooks/useMedication";
-import { useFormHandling } from "./hooks/useFormHandling";
-import { useToast } from "./hooks/useToast";
+'use client';
+import Image from 'next/image';
+import WomanIlustration from './assets/illustration woman.png';
+import WomanIlustration2 from './assets/illustration woman2.png';
+import crosses from './assets/kreuze.png';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useMedication } from './hooks/useMedication';
+import { useFormHandling } from './hooks/useFormHandling';
+import { useToast } from './hooks/useToast';
 import {
   CountryForm,
   DurationForm,
   MedicationForm,
   GuteReiseForm,
   WarnungForm,
-} from "./components/formComponents";
+} from './components/formComponents';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [medications, setMedications] = useState([]);
+  const [medicationOptions, setMedicationOptions] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
   const { showToast } = useToast();
   const {
@@ -45,7 +48,7 @@ export default function Home() {
     />,
     <MedicationForm
       formInput={formInput}
-      handleSelectChange={handleSelectChange}
+      handleSelectChange={handleMedChange}
       handleInput={handleInput}
       handlingMedForm={handlingMedForm}
       handlePriorForm={switchToPriorForm}
@@ -53,6 +56,8 @@ export default function Home() {
       allMeds={allMeds}
       deleteMed={deleteMed}
       errorMsg={errorMsg}
+      options={medicationOptions}
+      handleMedChange={handleMedChange}
     />,
     <GuteReiseForm
       handleSumbitForm={switchToNextForm}
@@ -64,6 +69,42 @@ export default function Home() {
     />,
   ];
 
+  // value beinhaltet changing Input vom Medi-Auswahl
+  // TODO: diesen Change nehmen und Query in Datenbank mit LIKE
+  function handleMedChange(value) {
+    // Entfernt alle doppelten Anführungszeichen aus dem Wert
+    const testValue = `%'${value}'%`;
+    console.log('JAHGSDHJAGD   ' + testValue);
+    const results = searchMedications(value);
+    results.then((data) => console.log(data));
+  }
+
+  const searchMedications = async (searchString) => {
+    try {
+      const response = await fetch(
+        `/api/getSimiliarMedications?searchString=${searchString}`
+      );
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching medications:', error);
+      return [];
+    }
+  };
+
+  // nimmt die Rückgabe von der Datenbank und kreiert passende Optin Objekte für react-select
+  function transformToOptions(data) {
+    const options = data.map((med) => ({
+      value: med.arzneimittelname,
+      label: med.arzneimittelname,
+    }));
+    setMedicationOptions(options);
+  }
   function checkMedication() {
     // TODO: adding backend Logic
     // Füge Medikament hinzu und setze die Formulareingabe zurück
@@ -74,7 +115,7 @@ export default function Home() {
     if (isAdded) {
       setFormInput((prevFormInput) => ({
         ...prevFormInput,
-        medication: "",
+        medication: '',
         medicationQuant: 0,
       }));
     }
@@ -83,13 +124,13 @@ export default function Home() {
   function handlingMedForm(e) {
     e.preventDefault();
     if (allMeds.length === 0) {
-      showToast("😦 OH OH ! Du hast kein Medikament eingetragen");
+      showToast('😦 OH OH ! Du hast kein Medikament eingetragen');
       return;
     }
     const isMedInputEmpty = !formInput.medication && !formInput.medicationQuant;
 
     if (!isMedInputEmpty) {
-      showToast("🤔 Hast du vergessen das Medikament einzutragen ?");
+      showToast('🤔 Hast du vergessen das Medikament einzutragen ?');
       return;
     }
 
@@ -101,11 +142,11 @@ export default function Home() {
       <ToastContainer />
       <div className="flex flex-col items-center gap-4 mx-auto mt-20  ">
         <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold">
-          Willkommen bei Medicarry !{" "}
+          Willkommen bei Medicarry !{' '}
         </h1>
         <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold">
-          {" "}
-          <span className="text-primary">Reisen</span> leicht gemacht{" "}
+          {' '}
+          <span className="text-primary">Reisen</span> leicht gemacht{' '}
         </h2>
         <p className="text-subline lg:text-lg">
           Informieren, einpacken und los! Ihr Gesundheitsbegleiter auf jeder

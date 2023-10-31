@@ -18,6 +18,8 @@ function MedicationForm({
   allMeds,
   deleteMed,
   errorMsg,
+  options,
+  handleMedChange,
 }) {
   return (
     <Form
@@ -32,6 +34,7 @@ function MedicationForm({
           onInputChange: handleSelectChange,
           addingError: errorMsg.medicationError,
           selectOptions: medications,
+          handleMedChange: handleMedChange,
         },
         {
           IconComponent: GoNumber,

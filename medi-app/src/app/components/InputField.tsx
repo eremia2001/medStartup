@@ -14,6 +14,7 @@ function InputField({
   name,
   addingError,
   selectOptions,
+  handleMedChange,
 }) {
   const customStyles = {
     control: (provided) => ({
@@ -33,6 +34,11 @@ function InputField({
         {IconComponent && <IconComponent color="#6C63FF" size={30} />}
         {inputType === "select" ? (
           <Select
+            onInputChange={(inputValue, { action }) => {
+              if (action === "input-change" && name == "medication") {
+                handleMedChange(inputValue);
+              }
+            }}
             onChange={(e) => onInputChange(e?.value, name)}
             options={selectOptions}
             placeholder={placeholder}
