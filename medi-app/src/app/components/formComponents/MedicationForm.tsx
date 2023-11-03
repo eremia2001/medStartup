@@ -1,12 +1,12 @@
 // components/MedicationForm.js
-import React from "react";
-import Form from "../Form";
-import { MdMedication } from "react-icons/md";
-import { GoNumber } from "react-icons/go";
-import { BsTrash } from "react-icons/bs";
-import { medications } from "../../data/medications";
-import { useMedication } from "../../hooks/useMedication";
-import { useFormHandling } from "../../hooks/useFormHandling";
+import React from 'react';
+import Form from '../Form';
+import { MdMedication } from 'react-icons/md';
+import { GoNumber } from 'react-icons/go';
+import { BsTrash } from 'react-icons/bs';
+import { medications } from '../../data/medications';
+import { useMedication } from '../../hooks/useMedication';
+import { useFormHandling } from '../../hooks/useFormHandling';
 
 function MedicationForm({
   handleSelectChange,
@@ -27,21 +27,21 @@ function MedicationForm({
       inputFields={[
         {
           IconComponent: MdMedication,
-          placeholder: "Medikamente",
-          inputType: "select",
+          placeholder: 'Medikamente',
+          inputType: 'select',
           value: formInput.medication,
-          name: "medication",
+          name: 'medication',
           onInputChange: handleSelectChange,
           addingError: errorMsg.medicationError,
-          selectOptions: medications,
+          selectOptions: options,
           handleMedChange: handleMedChange,
         },
         {
           IconComponent: GoNumber,
-          placeholder: "Anzahl",
-          inputType: "number",
+          placeholder: 'Anzahl',
+          inputType: 'number',
           value: formInput.medicationQuant,
-          name: "medicationQuant",
+          name: 'medicationQuant',
           onInputChange: handleInput,
           addingError: errorMsg.quantityError,
         },

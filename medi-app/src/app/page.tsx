@@ -48,7 +48,7 @@ export default function Home() {
     />,
     <MedicationForm
       formInput={formInput}
-      handleSelectChange={handleMedChange}
+      handleSelectChange={handleMedDefaultOpt}
       handleInput={handleInput}
       handlingMedForm={handlingMedForm}
       handlePriorForm={switchToPriorForm}
@@ -69,21 +69,31 @@ export default function Home() {
     />,
   ];
 
+  useEffect(() => {
+    setDefaultOptions();
+  }, []);
+
+  function handleMedDefaultOpt(value, name) {
+    handleSelectChange(value, name);
+    setDefaultOptions();
+  }
+
   // value beinhaltet changing Input vom Medi-Auswahl
   // TODO: diesen Change nehmen und Query in Datenbank mit LIKE
   function handleMedChange(value) {
     // Entfernt alle doppelten Anführungszeichen aus dem Wert
-    const testValue = `%'${value}'%`;
-    console.log('JAHGSDHJAGD   ' + testValue);
     const results = searchMedications(value);
-    results.then((data) => console.log(data));
+    results.then((data) => transformToOptions(data));
+  }
+
+  function setDefaultOptions() {
+    const results = searchMedications('a');
+    results.then((data) => transformToOptions(data));
   }
 
   const searchMedications = async (searchString) => {
     try {
-      const response = await fetch(
-        `/api/getSimiliarMedications?searchString=${searchString}`
-      );
+      const response = await fetch(`/api/testMed?searchString=${searchString}`);
       const data = await response.json();
 
       if (!response.ok) {

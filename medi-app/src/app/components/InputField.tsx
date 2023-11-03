@@ -1,7 +1,7 @@
-import { ChangeEvent, ReactElement } from "react";
-import { IconType } from "react-icons";
-import { InputFieldConfig } from "../types";
-import Select from "react-select";
+import { ChangeEvent, ReactElement } from 'react';
+import { IconType } from 'react-icons';
+import { InputFieldConfig } from '../types';
+import Select from 'react-select';
 
 function InputField({
   IconComponent,
@@ -19,12 +19,10 @@ function InputField({
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      border: "none", // Dies entfernt die Border
-      boxShadow: "none", // Dies entfernt den Schatten, der standardmäßig angezeigt wird, wenn die Border entfernt wird
+      border: 'none', // Dies entfernt die Border
+      boxShadow: 'none', // Dies entfernt den Schatten, der standardmäßig angezeigt wird, wenn die Border entfernt wird
     }),
   };
-
-  const defaultValue = { value: "Kanada", label: "Kanada" };
 
   return (
     <div className={`${className}`}>
@@ -32,10 +30,10 @@ function InputField({
         className={`p-2 flex flex-row gap-2 items-center border-2 border-[#D3E7FF] rounded-lg mt-10 w-[300px] select-none `}
       >
         {IconComponent && <IconComponent color="#6C63FF" size={30} />}
-        {inputType === "select" ? (
+        {inputType === 'select' ? (
           <Select
             onInputChange={(inputValue, { action }) => {
-              if (action === "input-change" && name == "medication") {
+              if (action === 'input-change' && name == 'medication') {
                 handleMedChange(inputValue);
               }
             }}
@@ -52,7 +50,7 @@ function InputField({
           <input
             type={inputType}
             value={value}
-            {...(inputType === "number" ? { min: 0 } : {})}
+            {...(inputType === 'number' ? { min: 0 } : {})}
             placeholder={placeholder}
             onChange={(e) => onInputChange(e)}
             className="w-full outline-none"
@@ -63,12 +61,12 @@ function InputField({
       {errorMessage ? (
         <p className="text-error font-medium ">{errorMessage}</p>
       ) : (
-        ""
+        ''
       )}
       {addingError ? (
         <p className="text-error font-medium ">{addingError}</p>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

@@ -1,12 +1,12 @@
 // hooks/useFormHandling.js
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useFormHandling() {
   const [formInput, setFormInput] = useState({
-    medication: "",
+    medication: '',
     medicationQuant: 0,
-    travelDuration: "",
-    country: "",
+    travelDuration: '',
+    country: '',
   });
   const [formNumber, setFormNumber] = useState(1);
 
