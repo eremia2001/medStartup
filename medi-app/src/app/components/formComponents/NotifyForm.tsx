@@ -11,8 +11,12 @@ const NotifyForm = ({ handleSumbitForm, handlePriorForm, endForm }) => {
   return (
     <>
       {endForm}
-      {(endForm === 'gelb' && <GuteReiseForm />) ||
-        (endForm == 'grün' && <WarnungForm />)}
+      {(endForm === 'gelb' && (
+        <GuteReiseForm handlePriorForm={handlePriorForm} />
+      )) ||
+        (endForm == 'grün' && (
+          <WarnungForm handlePriorForm={handlePriorForm} />
+        ))}
       {/* Hier könnten Sie auch die WarnungForm einfügen, falls benötigt */}
     </>
   );
