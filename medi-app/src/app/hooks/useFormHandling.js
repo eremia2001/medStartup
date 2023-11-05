@@ -22,6 +22,21 @@ export function useFormHandling() {
       setFormNumber(formNumber + 1); // Nächste Form anzeigen
     }, 200); // Wartezeit bis zur nächsten Form
   }
+  function switchToGreen() {
+    setTimeout(() => {
+      setFormNumber(formNumber + 1); // Nächste Form anzeigen
+    }, 200); // Wartezeit bis zur nächsten Form
+  }
+  function switchToYellow() {
+    setTimeout(() => {
+      setFormNumber(formNumber + 3); // Nächste Form anzeigen
+    }, 200); // Wartezeit bis zur nächsten Form
+  }
+  function switchToRed() {
+    setTimeout(() => {
+      setFormNumber(formNumber + 2); // Nächste Form anzeigen
+    }, 200); // Wartezeit bis zur nächsten Form
+  }
 
   function switchToPriorForm() {
     setTimeout(() => {
@@ -39,6 +54,10 @@ export function useFormHandling() {
     switchToPriorForm,
     formNumber,
     setFormInput,
+    setFormNumber,
+    switchToGreen,
+    switchToYellow,
+    switchToRed
     // ... (restliche exportierte Werte und Funktionen)
   };
 }

@@ -15,12 +15,15 @@ import {
   MedicationForm,
   GuteReiseForm,
   WarnungForm,
+  NotifyForm,
 } from './components/formComponents';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [medications, setMedications] = useState([]);
   const [medicationOptions, setMedicationOptions] = useState([]);
+  const [finalForm, setFinalForm] = useState('grün');
+  const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
   const { showToast } = useToast();
   const {
@@ -31,6 +34,9 @@ export default function Home() {
     switchToPriorForm,
     formNumber,
     setFormInput,
+    switchToGreen,
+    switchToYellow,
+    switchToRed,
   } = useFormHandling();
 
   const formList = [
@@ -59,19 +65,33 @@ export default function Home() {
       options={medicationOptions}
       handleMedChange={handleMedChange}
     />,
-    <GuteReiseForm
+
+    // Eine gemeinsame Form - KOmponente für alle 3 Farben ?
+    <NotifyForm
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
-    />,
-    <WarnungForm
-      handleSumbitForm={switchToNextForm}
-      handlePriorForm={switchToPriorForm}
+      endForm={finalForm}
     />,
   ];
 
   useEffect(() => {
     setDefaultOptions();
   }, []);
+
+  function checkFormSwitch() {
+    const isRot = apiResult.find((element) => {
+      return element.status == 'rot';
+    });
+    const isGelb = apiResult.find((element) => {
+      return element.status == 'gelb';
+    });
+
+    if (isRot) {
+      setFinalForm('rot');
+    } else if (isGelb) {
+      setFinalForm('gelb');
+    }
+  }
 
   function handleMedDefaultOpt(value, name) {
     handleSelectChange(value, name);
@@ -131,12 +151,13 @@ export default function Home() {
     }
   }
 
-  function handlingMedForm(e) {
+  async function handlingMedForm(e) {
     e.preventDefault();
     if (allMeds.length === 0) {
       showToast('😦 OH OH ! Du hast kein Medikament eingetragen');
       return;
     }
+
     const isMedInputEmpty = !formInput.medication && !formInput.medicationQuant;
 
     if (!isMedInputEmpty) {
@@ -144,7 +165,33 @@ export default function Home() {
       return;
     }
 
-    switchToNextForm();
+    // API aufrufen, um den Medikamentenstatus zu überprüfen
+
+    try {
+      const response = await fetch(`/api/getResult`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          country: formInput.country,
+          tripDuration: formInput.travelDuration,
+          medications: allMeds,
+        }),
+      });
+
+      const data = await response.json();
+      setApiResult(data);
+      if (!response.ok) {
+        throw new Error(data.error || 'Error fetching medication status');
+      }
+
+      checkFormSwitch();
+      switchToNextForm();
+    } catch (error) {
+      console.error('Error fetching medication status:', error);
+      showToast('😦 Fehler beim Abrufen des Medikamentenstatus');
+    }
   }
 
   return (

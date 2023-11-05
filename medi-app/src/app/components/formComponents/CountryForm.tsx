@@ -1,8 +1,8 @@
 // components/CountryForm.js
-import React from "react";
-import Form from "../Form";
-import { PiAirplaneLandingFill } from "react-icons/pi";
-import { countries } from "../../data/countries";
+import React from 'react';
+import Form from '../Form';
+import { PiAirplaneLandingFill } from 'react-icons/pi';
+import { countries } from '../../data/countries';
 
 function CountryForm({
   onInputChange,
@@ -16,10 +16,10 @@ function CountryForm({
       inputFields={[
         {
           IconComponent: PiAirplaneLandingFill,
-          placeholder: "Flug",
-          name: "country",
+          placeholder: 'Flug',
+          name: 'country',
           value: inputValue,
-          inputType: "select",
+          inputType: 'select',
           onInputChange: onInputChange,
           selectOptions: countries,
         },

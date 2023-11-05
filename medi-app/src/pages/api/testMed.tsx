@@ -1,13 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 const db = require('../../app/db');
 
 type ResponseData = {
   result: any; // Passen Sie diesen Typ an, um ihn an Ihre Daten anzupassen
   error?: string;
 };
-
-const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,6 +23,5 @@ export default async function handler(
   } catch (error) {
     res.status(500).json({ error: error.message });
   } finally {
-    await prisma.$disconnect();
   }
 }
