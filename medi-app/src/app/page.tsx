@@ -40,6 +40,11 @@ export default function Home() {
   } = useFormHandling();
 
   const formList = [
+    <NotifyForm
+      handleSumbitForm={switchToNextForm}
+      handlePriorForm={switchToPriorForm}
+      endForm={'grün'}
+    />,
     <CountryForm
       inputValue={formInput.country}
       onInputChange={handleSelectChange}
@@ -67,11 +72,6 @@ export default function Home() {
     />,
 
     // Eine gemeinsame Form - KOmponente für alle 3 Farben ?
-    <NotifyForm
-      handleSumbitForm={switchToNextForm}
-      handlePriorForm={switchToPriorForm}
-      endForm={finalForm}
-    />,
   ];
 
   useEffect(() => {

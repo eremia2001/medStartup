@@ -1,12 +1,12 @@
 // components/GuteReiseForm.js
-import React from "react";
-import Form from "../Form";
-import { BsCheckCircleFill } from "react-icons/bs";
+import React from 'react';
+import Form from '../Form';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 function GuteReiseForm({ handleSumbitForm, handlePriorForm }) {
   return (
     <Form
-      title="Gute Reise ! "
+      title="Alles klar für ihre Reise ! "
       inputFields={[]}
       handleSumbitForm={handleSumbitForm}
       id={4}
@@ -14,14 +14,19 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm }) {
       handlePriorForm={handlePriorForm}
     >
       <p className="text-subline mx-auto text-sm">
-        Unsere Datenbank hat keine Auffäligkeiten aufgezeigt
+        Ihre Medikamente sind{' '}
+        <span className="font-bold text-succsess">zugelassen</span>
       </p>
-      <BsCheckCircleFill className="mx-auto text-green-600 text-[150px] mt-10" />
-      <p className="text-subline mx-auto text-sm mt-5">
-        <span className="text-red-500 font-semibold">Hinweis : </span>
-        Medikamente in Originalverpackung mitführen & nehmen Sie zur Sicherheit
-        sofern benötigt immer ihren Medikamentenplan mit
-      </p>
+
+      <div className="bg-succsess text-white flex flex-col justify-center relative p-5">
+        <p>
+          Wir haben Ihre Medikamentenliste überprüft und können bestätigen, dass
+          alle ausgewählten Medikamente für Ihre Reise nach Thailand geeignet
+          sind.
+        </p>
+        <p className="text-sm">Folgende Medikamente sind zugelassen : </p>
+        <AiOutlineCheckCircle className="absolute left-5" />
+      </div>
     </Form>
   );
 }
