@@ -6,7 +6,9 @@ export function useMedOptions() {
 
   const searchMedications = async (searchString) => {
     try {
-      const response = await fetch(`/api/testMed?searchString=${searchString}`);
+      const response = await fetch(
+        `/api/getSimiliarMedications?searchString=${searchString}`
+      );
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
       return data;
