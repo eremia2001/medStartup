@@ -8,20 +8,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useMedication } from './hooks/useMedication';
 import { useFormHandling } from './hooks/useFormHandling';
+import { useMedOptions } from './hooks/useMedOptions';
+import { fetchMedicationStatus } from '../app/utils/api';
+
 import { useToast } from './hooks/useToast';
 import {
   CountryForm,
   DurationForm,
   MedicationForm,
-  GuteReiseForm,
-  WarnungForm,
   NotifyForm,
 } from './components/formComponents';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [medications, setMedications] = useState([]);
-  const [medicationOptions, setMedicationOptions] = useState([]);
   const [finalForm, setFinalForm] = useState('grün');
   const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
@@ -34,10 +33,9 @@ export default function Home() {
     switchToPriorForm,
     formNumber,
     setFormInput,
-    switchToGreen,
-    switchToYellow,
-    switchToRed,
   } = useFormHandling();
+  const { medicationOptions, handleMedChange, setDefaultOptions } =
+    useMedOptions();
 
   const formList = [
     <NotifyForm
@@ -77,6 +75,9 @@ export default function Home() {
   useEffect(() => {
     setDefaultOptions();
   }, []);
+  useEffect(() => {
+    checkFormSwitch();
+  }, [apiResult]);
 
   function checkFormSwitch() {
     const isRot = apiResult.find((element) => {
@@ -90,6 +91,8 @@ export default function Home() {
       setFinalForm('rot');
     } else if (isGelb) {
       setFinalForm('gelb');
+    } else {
+      setFinalForm('grün');
     }
   }
 
@@ -98,43 +101,6 @@ export default function Home() {
     setDefaultOptions();
   }
 
-  // value beinhaltet changing Input vom Medi-Auswahl
-  // TODO: diesen Change nehmen und Query in Datenbank mit LIKE
-  function handleMedChange(value) {
-    // Entfernt alle doppelten Anführungszeichen aus dem Wert
-    const results = searchMedications(value);
-    results.then((data) => transformToOptions(data));
-  }
-
-  function setDefaultOptions() {
-    const results = searchMedications('a');
-    results.then((data) => transformToOptions(data));
-  }
-
-  const searchMedications = async (searchString) => {
-    try {
-      const response = await fetch(`/api/testMed?searchString=${searchString}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Error fetching medications:', error);
-      return [];
-    }
-  };
-
-  // nimmt die Rückgabe von der Datenbank und kreiert passende Optin Objekte für react-select
-  function transformToOptions(data) {
-    const options = data.map((med) => ({
-      value: med.arzneimittelname,
-      label: med.arzneimittelname,
-    }));
-    setMedicationOptions(options);
-  }
   function checkMedication() {
     // TODO: adding backend Logic
     // Füge Medikament hinzu und setze die Formulareingabe zurück
@@ -168,28 +134,15 @@ export default function Home() {
     // API aufrufen, um den Medikamentenstatus zu überprüfen
 
     try {
-      const response = await fetch(`/api/getResult`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          country: formInput.country,
-          tripDuration: formInput.travelDuration,
-          medications: allMeds,
-        }),
+      const data = await fetchMedicationStatus({
+        country: formInput.country,
+        tripDuration: formInput.travelDuration,
+        medications: allMeds,
       });
-
-      const data = await response.json();
       setApiResult(data);
-      if (!response.ok) {
-        throw new Error(data.error || 'Error fetching medication status');
-      }
-
-      checkFormSwitch();
+      console.log('API Results : ' + apiResult);
       switchToNextForm();
     } catch (error) {
-      console.error('Error fetching medication status:', error);
       showToast('😦 Fehler beim Abrufen des Medikamentenstatus');
     }
   }

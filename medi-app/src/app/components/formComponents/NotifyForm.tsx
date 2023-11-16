@@ -7,14 +7,15 @@ import {
   WarnungForm,
 } from '../formComponents';
 
-const NotifyForm = ({ handleSumbitForm, handlePriorForm, endForm }) => {
+const NotifyForm = ({ handlePriorForm, endForm }) => {
   return (
     <>
-      {endForm}
       {(endForm === 'grün' && (
         <GuteReiseForm handlePriorForm={handlePriorForm} />
       )) ||
-        (endForm == 'rot' && <WarnungForm handlePriorForm={handlePriorForm} />)}
+        (endForm == 'gelb' && (
+          <WarnungForm handlePriorForm={handlePriorForm} />
+        ))}
       {/* Hier könnten Sie auch die WarnungForm einfügen, falls benötigt */}
     </>
   );
