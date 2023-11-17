@@ -4,3 +4,4 @@ export { default as MedicationForm } from "./MedicationForm";
 export { default as GuteReiseForm } from "./GuteReiseForm";
 export { default as WarnungForm } from "./WarnungForm";
 export { default as NotifyForm } from "./NotifyForm";
+export { default as GelbForm } from "./GelbForm";

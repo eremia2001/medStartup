@@ -5,6 +5,7 @@ import {
   MedicationForm,
   GuteReiseForm,
   WarnungForm,
+  GelbForm,
 } from '../formComponents';
 
 const NotifyForm = ({ handlePriorForm, endForm, medList }) => {
@@ -15,6 +16,9 @@ const NotifyForm = ({ handlePriorForm, endForm, medList }) => {
       )) ||
         (endForm == 'rot' && (
           <WarnungForm handlePriorForm={handlePriorForm} medList={medList} />
+        )) ||
+        (endForm == 'gelb' && (
+          <GelbForm handlePriorForm={handlePriorForm} medList={medList} />
         ))}
       {/* Hier könnten Sie auch die WarnungForm einfügen, falls benötigt */}
     </>

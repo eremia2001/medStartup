@@ -71,7 +71,7 @@ export default function Home() {
     <NotifyForm
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
-      endForm={'rot'}
+      endForm={'gelb'}
       medList={allMeds}
     />,
 
