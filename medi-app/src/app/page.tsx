@@ -10,6 +10,7 @@ import { useMedication } from './hooks/useMedication';
 import { useFormHandling } from './hooks/useFormHandling';
 import { useMedOptions } from './hooks/useMedOptions';
 import { fetchMedicationStatus } from '../app/utils/api';
+import { Nunito } from 'next/font/google';
 
 import { useToast } from './hooks/useToast';
 import {
@@ -19,9 +20,13 @@ import {
   NotifyForm,
 } from './components/formComponents';
 import { useEffect, useState } from 'react';
+const inter = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export default function Home() {
-  const [finalForm, setFinalForm] = useState('grün');
+  const [finalForm, setFinalForm] = useState('');
   const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
   const { showToast } = useToast();
@@ -38,11 +43,6 @@ export default function Home() {
     useMedOptions();
 
   const formList = [
-    <NotifyForm
-      handleSumbitForm={switchToNextForm}
-      handlePriorForm={switchToPriorForm}
-      endForm={'grün'}
-    />,
     <CountryForm
       inputValue={formInput.country}
       onInputChange={handleSelectChange}
@@ -67,6 +67,12 @@ export default function Home() {
       errorMsg={errorMsg}
       options={medicationOptions}
       handleMedChange={handleMedChange}
+    />,
+    <NotifyForm
+      handleSumbitForm={switchToNextForm}
+      handlePriorForm={switchToPriorForm}
+      endForm={'grün'}
+      medList={allMeds}
     />,
 
     // Eine gemeinsame Form - KOmponente für alle 3 Farben ?
@@ -99,6 +105,9 @@ export default function Home() {
   function handleMedDefaultOpt(value, name) {
     handleSelectChange(value, name);
     setDefaultOptions();
+  }
+  function isLastForm() {
+    return formNumber === formList.length;
   }
 
   function checkMedication() {
@@ -140,7 +149,6 @@ export default function Home() {
         medications: allMeds,
       });
       setApiResult(data);
-      console.log('API Results : ' + apiResult);
       switchToNextForm();
     } catch (error) {
       showToast('😦 Fehler beim Abrufen des Medikamentenstatus');
@@ -148,7 +156,9 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen px-4 flex-col bg-[#F9F9F9] relative">
+    <main
+      className={`flex min-h-screen px-4 flex-col bg-[#F9F9F9] relative ${inter.className}`}
+    >
       <ToastContainer />
       <div className="flex flex-col items-center gap-4 mx-auto mt-20  ">
         <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold">
@@ -176,34 +186,47 @@ export default function Home() {
         </motion.div>
       </AnimatePresence>
 
-      <Image
-        src={crosses}
-        alt="."
-        width={300}
-        height={500}
-        className="w-[16vw]  absolute top-20 left-10 hidden xl:block"
-      />
-      <Image
-        src={crosses}
-        alt="."
-        width={300}
-        height={500}
-        className=" w-[16vw]  absolute top-20 right-10 hidden xl:block"
-      />
-      <Image
-        src={WomanIlustration}
-        alt="."
-        width={200}
-        height={500}
-        className="absolute bottom-20 hidden xl:block"
-      />
-      <Image
-        src={WomanIlustration2}
-        alt="."
-        width={500}
-        height={500}
-        className="absolute bottom-20 right-2 hidden xl:block z-0"
-      />
+      <AnimatePresence>
+        {!isLastForm() && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Image
+                src={crosses}
+                alt="."
+                width={300}
+                height={500}
+                className="w-[16vw]  absolute top-20 left-10 hidden xl:block"
+              />
+              <Image
+                src={crosses}
+                alt="."
+                width={300}
+                height={500}
+                className=" w-[16vw]  absolute top-20 right-10 hidden xl:block"
+              />
+              <Image
+                src={WomanIlustration}
+                alt="."
+                width={200}
+                height={500}
+                className="absolute bottom-20 hidden xl:block"
+              />
+              <Image
+                src={WomanIlustration2}
+                alt="."
+                width={500}
+                height={500}
+                className="absolute bottom-20 right-2 hidden xl:block z-0"
+              />
+            </motion.div>
+            {/* Wiederholen Sie dies für die anderen Bilder mit entsprechenden Anpassungen */}
+          </>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

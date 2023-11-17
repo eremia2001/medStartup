@@ -7,11 +7,11 @@ import {
   WarnungForm,
 } from '../formComponents';
 
-const NotifyForm = ({ handlePriorForm, endForm }) => {
+const NotifyForm = ({ handlePriorForm, endForm, medList }) => {
   return (
     <>
       {(endForm === 'grün' && (
-        <GuteReiseForm handlePriorForm={handlePriorForm} />
+        <GuteReiseForm handlePriorForm={handlePriorForm} medList={medList} />
       )) ||
         (endForm == 'gelb' && (
           <WarnungForm handlePriorForm={handlePriorForm} />

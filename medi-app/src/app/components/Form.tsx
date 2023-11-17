@@ -1,10 +1,10 @@
-"use client";
-import { FaArrowLeft } from "react-icons/fa";
-import Button from "../components/Button";
-import InputField from "./InputField";
-import { FormProps } from "../types";
-import { motion } from "framer-motion";
-import { useState } from "react";
+'use client';
+import { FaArrowLeft } from 'react-icons/fa';
+import Button from '../components/Button';
+import InputField from './InputField';
+import { FormProps } from '../types';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export default function Form({
   title,
@@ -36,14 +36,14 @@ export default function Form({
       const type = inputField.inputType;
       const value = inputField.value;
       const name = inputField.name;
-      console.log("Value of validateInput" + value);
+      console.log('Value of validateInput' + value);
 
-      if (type == "select" && value == "") {
-        errors[name] = "Eine Auswahl ist erforderlich";
-      } else if (type == "text" && (!value || value.trim() === "")) {
-        errors[name] = "Eingabe darf nicht leer sein";
-      } else if (type == "number" && (value <= 0 || value === "")) {
-        errors[name] = "Eingabe muss größer als 0 sein";
+      if (type == 'select' && value == '') {
+        errors[name] = 'Eine Auswahl ist erforderlich';
+      } else if (type == 'text' && (!value || value.trim() === '')) {
+        errors[name] = 'Eingabe darf nicht leer sein';
+      } else if (type == 'number' && (value <= 0 || value === '')) {
+        errors[name] = 'Eingabe muss größer als 0 sein';
       }
     });
 
@@ -64,9 +64,9 @@ export default function Form({
   return (
     <form
       onSubmit={
-        functionality == "medicationInput" ? handleSumbitForm : handleSubmit
+        functionality == 'medicationInput' ? handleSumbitForm : handleSubmit
       }
-      className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[800px] mx-auto z-50"
+      className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[900px] mx-auto z-50"
     >
       {id !== 1 && (
         <motion.div
@@ -80,11 +80,11 @@ export default function Form({
           />
         </motion.div>
       )}
-      <h1 className="mx-auto text-2xl lg:text-3xl">{title}</h1>
+      <h1 className="mx-auto text-2xl lg:text-3xl font-semibold">{title}</h1>
       <div className=" w-full grid grid-cols-fluid gap-3">
         {inputFields.map((field) => (
           <InputField
-            className={`${inputFields.length === 1 ? "mx-auto" : ""}`}
+            className={`${inputFields.length === 1 ? 'mx-auto' : ''}`}
             key={field.placeholder}
             errorMessage={errors[field.name]}
             {...field}
