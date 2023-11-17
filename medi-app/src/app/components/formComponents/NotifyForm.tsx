@@ -13,8 +13,8 @@ const NotifyForm = ({ handlePriorForm, endForm, medList }) => {
       {(endForm === 'grün' && (
         <GuteReiseForm handlePriorForm={handlePriorForm} medList={medList} />
       )) ||
-        (endForm == 'gelb' && (
-          <WarnungForm handlePriorForm={handlePriorForm} />
+        (endForm == 'rot' && (
+          <WarnungForm handlePriorForm={handlePriorForm} medList={medList} />
         ))}
       {/* Hier könnten Sie auch die WarnungForm einfügen, falls benötigt */}
     </>
