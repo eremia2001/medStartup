@@ -160,32 +160,6 @@ export default function Home() {
       className={`flex min-h-screen px-4 flex-col bg-[#F9F9F9] relative ${inter.className}`}
     >
       <ToastContainer />
-      <div className="flex flex-col items-center gap-4 mx-auto mt-20  ">
-        <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold">
-          Willkommen bei Medicarry !{' '}
-        </h1>
-        <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold">
-          {' '}
-          <span className="text-primary">Reisen</span> leicht gemacht{' '}
-        </h2>
-        <p className="text-subline lg:text-lg">
-          Informieren, einpacken und los! Ihr Gesundheitsbegleiter auf jeder
-          Reise.
-        </p>
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          className="mx-auto w-full mt-28"
-          key={formNumber}
-          initial={{ x: -300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 300, opacity: 0 }}
-        >
-          {formList[formNumber - 1]}
-        </motion.div>
-      </AnimatePresence>
-
       <AnimatePresence>
         {!isLastForm() && (
           <>
@@ -222,10 +196,35 @@ export default function Home() {
                 height={500}
                 className="absolute bottom-20 right-2 hidden xl:block z-0"
               />
+              <div className="flex flex-col items-center gap-4 mx-auto mt-20  ">
+                <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold">
+                  Willkommen bei Medicarry !{' '}
+                </h1>
+                <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold">
+                  {' '}
+                  <span className="text-primary">Reisen</span> leicht gemacht{' '}
+                </h2>
+                <p className="text-subline lg:text-lg">
+                  Informieren, einpacken und los! Ihr Gesundheitsbegleiter auf
+                  jeder Reise.
+                </p>
+              </div>
             </motion.div>
             {/* Wiederholen Sie dies für die anderen Bilder mit entsprechenden Anpassungen */}
           </>
         )}
+      </AnimatePresence>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          className="mx-auto w-full mt-28"
+          key={formNumber}
+          initial={{ x: -300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 300, opacity: 0 }}
+        >
+          {formList[formNumber - 1]}
+        </motion.div>
       </AnimatePresence>
     </main>
   );
