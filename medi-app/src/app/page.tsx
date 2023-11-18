@@ -71,8 +71,10 @@ export default function Home() {
     <NotifyForm
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
-      endForm={'gelb'}
+      endForm={finalForm}
       medList={allMeds}
+      apiResult={apiResult}
+      deleteMed={deleteMed}
     />,
 
     // Eine gemeinsame Form - KOmponente für alle 3 Farben ?
@@ -92,10 +94,15 @@ export default function Home() {
     const isGelb = apiResult.find((element) => {
       return element.status == 'gelb';
     });
+    const isOrange = apiResult.find((element) => {
+      return element.status == 'orange';
+    });
 
     if (isRot) {
       setFinalForm('rot');
     } else if (isGelb) {
+      setFinalForm('gelb');
+    } else if (isOrange) {
       setFinalForm('gelb');
     } else {
       setFinalForm('grün');
@@ -154,6 +161,22 @@ export default function Home() {
       showToast('😦 Fehler beim Abrufen des Medikamentenstatus');
     }
   }
+
+  async function loadData() {
+    const data = await fetchMedicationStatus({
+      country: formInput.country,
+      tripDuration: formInput.travelDuration,
+      medications: allMeds,
+    });
+    return data;
+  }
+  useEffect(() => {
+    console.log('ÄNDERUNG ! ');
+
+    const data = loadData();
+    data.then((result) => setApiResult(result));
+    checkFormSwitch();
+  }, [allMeds]);
 
   return (
     <main

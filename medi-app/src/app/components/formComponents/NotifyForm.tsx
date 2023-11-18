@@ -1,14 +1,13 @@
 import React from 'react';
-import {
-  CountryForm,
-  DurationForm,
-  MedicationForm,
-  GuteReiseForm,
-  WarnungForm,
-  GelbForm,
-} from '../formComponents';
+import { GuteReiseForm, WarnungForm, GelbForm } from '../formComponents';
 
-const NotifyForm = ({ handlePriorForm, endForm, medList }) => {
+const NotifyForm = ({
+  handlePriorForm,
+  endForm,
+  medList,
+  apiResult,
+  deleteMed,
+}) => {
   return (
     <>
       {(endForm === 'grün' && (
@@ -18,7 +17,12 @@ const NotifyForm = ({ handlePriorForm, endForm, medList }) => {
           <WarnungForm handlePriorForm={handlePriorForm} medList={medList} />
         )) ||
         (endForm == 'gelb' && (
-          <GelbForm handlePriorForm={handlePriorForm} medList={medList} />
+          <GelbForm
+            handlePriorForm={handlePriorForm}
+            medList={medList}
+            apiResult={apiResult}
+            deleteMed={deleteMed}
+          />
         ))}
       {/* Hier könnten Sie auch die WarnungForm einfügen, falls benötigt */}
     </>
