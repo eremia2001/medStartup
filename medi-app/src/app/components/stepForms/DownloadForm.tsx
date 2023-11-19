@@ -8,7 +8,11 @@ const DownloadForm = () => {
 
   return (
     <div className="">
-      <StepForm>
+      <StepForm
+        title="1. Formular "
+        specialTitle="herunterladen"
+        subtitle="Beginnen Sie mit dem ersten Schritt zur Vorbereitung Ihrer Medikamente"
+      >
         <a
           className="custom-dashed-border w-full text-subline flex flex-col justify-center items-center gap-2 p-10 cursor-pointer"
           href={fileUrl}

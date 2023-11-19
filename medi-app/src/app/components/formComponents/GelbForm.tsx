@@ -5,6 +5,8 @@ import Status from '../Status';
 import checklistItems from '../../data/checklistItems';
 import Checkliste from '../Checkliste';
 import DownloadForm from '../stepForms/DownloadForm';
+import FilloutForm from '../stepForms/FilloutForm';
+import ChecklistContainer from '../ChecklistContainer';
 function GelbForm({
   handleSumbitForm,
   handlePriorForm,
@@ -26,6 +28,31 @@ function GelbForm({
     setDisplayChecklist(updatedDisplayChecklist);
   }, [medList, apiResult]);
 
+  function getStatus(medName) {
+    const isRot = apiResult.find((element) => {
+      return element.name == medName && element.status == 'rot';
+    });
+    const isGelb = apiResult.find((element) => {
+      return element.name == medName && element.status == 'gelb';
+    });
+    const isOrange = apiResult.find((element) => {
+      return element.name == medName && element.status == 'orange';
+    });
+    if (isRot) {
+      return 'rot';
+    } else if (isGelb) {
+      return 'gelb';
+    } else if (isOrange) {
+      return 'orange';
+    } else {
+      return 'grün';
+    }
+  }
+
+  const filterToStatus = (status) => {
+    return medList.filter((med) => getStatus(med.medication) == status);
+  };
+
   return (
     <Form
       title="Achtung Reiseinformation ! "
@@ -43,10 +70,11 @@ function GelbForm({
 
       <div className="flex flex-row  items-center mt-10 justify-between">
         <Status apiResult={apiResult} medList={medList} deleteMed={deleteMed} />
-        <Checkliste items={displayChecklist} />
+        <ChecklistContainer items={displayChecklist} />
       </div>
-      <div className="flex flex-col gap-5 mt-10">
+      <div className="flex flex-col gap-10 mt-10">
         <DownloadForm />
+        <FilloutForm medChecklist={filterToStatus('gelb')} />
       </div>
     </Form>
   );
