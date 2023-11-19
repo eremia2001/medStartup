@@ -24,7 +24,7 @@ const Status = ({ medList, apiResult, deleteMed }) => {
     }
   }
   return (
-    <div className="flex flex-col mx-auto py-5 px-10 shadow-2xl">
+    <div className="flex flex-col py-5 px-10 shadow-2xl">
       <h1 className="font-bold text-2xl mx-auto">Status</h1>
       <div className="flex flex-col gap-2 mt-5">
         {medList.map((med, index) => (

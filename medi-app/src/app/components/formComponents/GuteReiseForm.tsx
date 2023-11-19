@@ -36,7 +36,7 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
                 <Check
                   key={med.medication}
                   medName={med.medication}
-                  checkStatus={'grün'}
+                  checked={true}
                 />
               );
             })}

@@ -4,6 +4,7 @@ import Form from '../Form';
 import Status from '../Status';
 import checklistItems from '../../data/checklistItems';
 import Checkliste from '../Checkliste';
+import DownloadForm from '../stepForms/DownloadForm';
 function GelbForm({
   handleSumbitForm,
   handlePriorForm,
@@ -40,8 +41,13 @@ function GelbForm({
         für Thailand
       </p>
 
-      <Status apiResult={apiResult} medList={medList} deleteMed={deleteMed} />
-      <Checkliste items={displayChecklist} />
+      <div className="flex flex-row  items-center mt-10 justify-between">
+        <Status apiResult={apiResult} medList={medList} deleteMed={deleteMed} />
+        <Checkliste items={displayChecklist} />
+      </div>
+      <div className="flex flex-col gap-5 mt-10">
+        <DownloadForm />
+      </div>
     </Form>
   );
 }
