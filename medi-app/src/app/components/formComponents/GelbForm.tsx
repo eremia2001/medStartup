@@ -50,7 +50,7 @@ function GelbForm({
   }
 
   const filterToStatus = (status) => {
-    return medList.filter((med) => getStatus(med.medication) == status);
+    return medList.filter((med) => getStatus(med.name) == status);
   };
 
   return (

@@ -69,7 +69,7 @@ function MedicationForm({
           key={index}
           className="flex flex-row justify-between mt-5 font-medium  "
         >
-          <span> {med.medication}</span>
+          <span> {med.name}</span>
           <div className="flex items-center">
             <span> {med.amount}</span>
             <BsTrash

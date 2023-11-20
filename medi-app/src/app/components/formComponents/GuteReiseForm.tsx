@@ -32,13 +32,7 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
           </p>
           <div className="grid grid-cols-fluid gap-2 ">
             {medList.map((med) => {
-              return (
-                <Check
-                  key={med.medication}
-                  medName={med.medication}
-                  checked={true}
-                />
-              );
+              return <Check key={med.name} medName={med.name} checked={true} />;
             })}
           </div>
         </div>

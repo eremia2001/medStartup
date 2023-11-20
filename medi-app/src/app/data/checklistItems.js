@@ -1,9 +1,9 @@
 // checklistItems.js
 
 const checklistItems = [
-  { medication: 'Unseren Formular herunterladen', status: 'gelb' },
-  { medication: 'Formular ausfüllen', status: 'gelb' },
-  { medication: 'Zuständige Behördenstelle informieren', status: 'orange' },
+  { name: 'Unseren Formular herunterladen', status: 'gelb' },
+  { name: 'Formular ausfüllen', status: 'gelb' },
+  { name: 'Zuständige Behördenstelle informieren', status: 'orange' },
   // Add more items as needed
 ];
 

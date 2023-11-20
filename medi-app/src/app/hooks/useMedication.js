@@ -10,7 +10,7 @@ export function useMedication() {
 
   function addMedication(medication, quantity) {
     if (validateMedication(medication, quantity)) {
-      setAllMeds((prevMeds) => [...prevMeds, { medication, amount: quantity }]);
+      setAllMeds((prevMeds) => [...prevMeds, { name:medication, amount: quantity }]);
       return true;
     }
     return false;
