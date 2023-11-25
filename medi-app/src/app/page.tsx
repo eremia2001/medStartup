@@ -254,7 +254,7 @@ export default function Home() {
       <Line
         percent={(formNumber / formList.length) * 100}
         strokeWidth={1}
-        strokeColor="blue"
+        strokeColor="#6C63FF"
         className="max-w-[900px] mx-auto "
       />
     </main>
