@@ -23,7 +23,7 @@ export default async function handler(
           SELECT md.arzneimittelname, l.wirkstoff, l.status 
           FROM medications md, land_wirkstoff l  
           WHERE md.wirkstoffe = l.wirkstoff 
-          AND l.land = $2 s
+          AND l.land = $2 
           AND md.arzneimittelname = $1
           `,
         [medication.name, country]

@@ -4,15 +4,15 @@ import { FaDownload } from 'react-icons/fa6';
 import Checkliste from '../Checkliste';
 import Checklist from '../Checkliste';
 
-const FilloutForm = ({ medChecklist }) => {
+const AuthorityInformForm = ({ medChecklist }) => {
   // Download-Funktion
 
   return (
     <div className="">
       <StepForm
-        title="2. Formular "
-        specialTitle="ausfüllen"
-        subtitle="für folgende Medikamente müssen Sie unser Formular ausfüllen :"
+        title="3. Behörde "
+        specialTitle="informieren"
+        subtitle="folgende Medikamente brauchen eine besondere Genehmigung von der zuständigen Behörde : "
       >
         <Checklist items={medChecklist} />
         <p className="mt-10 text-xs mx-auto ">
@@ -24,4 +24,4 @@ const FilloutForm = ({ medChecklist }) => {
   );
 };
 
-export default FilloutForm;
+export default AuthorityInformForm;

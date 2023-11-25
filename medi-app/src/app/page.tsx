@@ -11,6 +11,7 @@ import { useFormHandling } from './hooks/useFormHandling';
 import { useMedOptions } from './hooks/useMedOptions';
 import { fetchMedicationStatus } from '../app/utils/api';
 import { Nunito } from 'next/font/google';
+import { Line } from 'rc-progress';
 
 import { useToast } from './hooks/useToast';
 import {
@@ -177,10 +178,11 @@ export default function Home() {
     data.then((result) => setApiResult(result));
     checkFormSwitch();
   }, [allMeds]);
+  console.log((formNumber / formList.length) * 100);
 
   return (
     <main
-      className={`flex min-h-screen px-4 flex-col bg-[#F9F9F9] relative ${inter.className}`}
+      className={`flex min-h-screen px-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
     >
       <ToastContainer />
       <AnimatePresence>
@@ -249,6 +251,12 @@ export default function Home() {
           {formList[formNumber - 1]}
         </motion.div>
       </AnimatePresence>
+      <Line
+        percent={(formNumber / formList.length) * 100}
+        strokeWidth={1}
+        strokeColor="blue"
+        className="max-w-[900px] mx-auto "
+      />
     </main>
   );
 }

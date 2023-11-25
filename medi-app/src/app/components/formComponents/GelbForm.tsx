@@ -6,6 +6,8 @@ import checklistItems from '../../data/checklistItems';
 import Checkliste from '../Checkliste';
 import DownloadForm from '../stepForms/DownloadForm';
 import FilloutForm from '../stepForms/FilloutForm';
+import AuthorityInformForm from '../stepForms/AuthorityInformForm';
+import AuthorityContactForm from '../stepForms/AuthorityContactForm';
 import ChecklistContainer from '../ChecklistContainer';
 function GelbForm({
   handleSumbitForm,
@@ -73,8 +75,20 @@ function GelbForm({
         <ChecklistContainer items={displayChecklist} />
       </div>
       <div className="flex flex-col gap-10 mt-10">
-        <DownloadForm />
-        <FilloutForm medChecklist={filterToStatus('gelb')} />
+        <div>
+          {statusExistsInApiResult('gelb') && (
+            <>
+              <DownloadForm />
+              <FilloutForm medChecklist={filterToStatus('gelb')} />
+            </>
+          )}
+          {statusExistsInApiResult('orange') && (
+            <>
+              <AuthorityInformForm medChecklist={filterToStatus('orange')} />
+              <AuthorityContactForm />
+            </>
+          )}
+        </div>
       </div>
     </Form>
   );
