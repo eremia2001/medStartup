@@ -2,14 +2,14 @@ import React from 'react';
 import StepForm from '../StepForm';
 import { FaDownload } from 'react-icons/fa6';
 
-const DownloadForm = () => {
+const DownloadForm = ({ number }) => {
   // Download-Funktion
   const fileUrl = '/Reiseformular.pdf';
 
   return (
     <div className="">
       <StepForm
-        title="1. Formular "
+        title={`${number}. Formular`}
         specialTitle="herunterladen"
         subtitle="Beginnen Sie mit dem ersten Schritt zur Vorbereitung Ihrer Medikamente"
       >

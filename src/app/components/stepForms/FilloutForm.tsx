@@ -4,13 +4,13 @@ import { FaDownload } from 'react-icons/fa6';
 import Checkliste from '../Checkliste';
 import Checklist from '../Checkliste';
 
-const FilloutForm = ({ medChecklist }) => {
+const FilloutForm = ({ medChecklist, number }) => {
   // Download-Funktion
 
   return (
     <div className="">
       <StepForm
-        title="2. Formular "
+        title={`${number}. Formular`}
         specialTitle="ausfüllen"
         subtitle="für folgende Medikamente müssen Sie unser Formular ausfüllen :"
       >

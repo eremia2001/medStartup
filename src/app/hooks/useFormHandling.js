@@ -25,7 +25,9 @@ export function useFormHandling() {
 
   function switchToPriorForm() {
     setTimeout(() => {
-      setFormNumber(formNumber - 1); // Nächste Form anzeigen
+      if (formNumber > 1) {
+        setFormNumber(formNumber - 1); // Nächste Form anzeigen
+      }
     }, 200); // Wartezeit bis zur nächsten Form
   }
 

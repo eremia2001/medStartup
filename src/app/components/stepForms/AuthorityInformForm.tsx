@@ -4,13 +4,13 @@ import { FaDownload } from 'react-icons/fa6';
 import Checkliste from '../Checkliste';
 import Checklist from '../Checkliste';
 
-const AuthorityInformForm = ({ medChecklist }) => {
+const AuthorityInformForm = ({ medChecklist, number }) => {
   // Download-Funktion
 
   return (
     <div className="">
       <StepForm
-        title="3. Behörde "
+        title={`${number}. Behörde`}
         specialTitle="informieren"
         subtitle="folgende Medikamente brauchen eine besondere Genehmigung von der zuständigen Behörde : "
       >

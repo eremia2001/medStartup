@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GuteReiseForm, WarnungForm, GelbForm } from '../formComponents';
 
 const NotifyForm = ({
@@ -8,6 +8,12 @@ const NotifyForm = ({
   apiResult,
   deleteMed,
 }) => {
+  useEffect(() => {
+    if (medList.length == 0) {
+      handlePriorForm();
+    }
+  }, [medList]);
+
   return (
     <>
       {(endForm === 'grün' && (

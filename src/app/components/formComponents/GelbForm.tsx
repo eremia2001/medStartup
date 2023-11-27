@@ -21,6 +21,14 @@ function GelbForm({
   const statusExistsInApiResult = (status) => {
     return Boolean(apiResult.find((element) => element.status === status));
   };
+  const startNumberForGelb = statusExistsInApiResult('gelb') ? 1 : null;
+  const startNumberForOrange = statusExistsInApiResult('gelb')
+    ? statusExistsInApiResult('orange')
+      ? 3
+      : 1
+    : statusExistsInApiResult('orange')
+    ? 1
+    : null;
 
   useEffect(() => {
     // Aktualisieren von displayChecklist, wenn sich apiResult oder checklistItems ändert
@@ -78,14 +86,20 @@ function GelbForm({
         <div>
           {statusExistsInApiResult('gelb') && (
             <>
-              <DownloadForm />
-              <FilloutForm medChecklist={filterToStatus('gelb')} />
+              <DownloadForm number={startNumberForGelb} />
+              <FilloutForm
+                medChecklist={filterToStatus('gelb')}
+                number={startNumberForGelb + 1}
+              />
             </>
           )}
           {statusExistsInApiResult('orange') && (
             <>
-              <AuthorityInformForm medChecklist={filterToStatus('orange')} />
-              <AuthorityContactForm />
+              <AuthorityInformForm
+                medChecklist={filterToStatus('orange')}
+                number={startNumberForOrange}
+              />
+              <AuthorityContactForm number={startNumberForOrange + 1} />
             </>
           )}
         </div>

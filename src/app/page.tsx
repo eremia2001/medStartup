@@ -21,6 +21,7 @@ import {
   NotifyForm,
 } from './components/formComponents';
 import { useEffect, useState } from 'react';
+import { resolve } from 'path';
 const inter = Nunito({
   subsets: ['latin'],
   display: 'swap',
@@ -89,7 +90,7 @@ export default function Home() {
   }, [apiResult]);
 
   function checkFormSwitch() {
-    const isRot = apiResult.find((element) => {
+    const isRot = apiResult.every((element) => {
       return element.status == 'rot';
     });
     const isGelb = apiResult.find((element) => {
@@ -106,7 +107,9 @@ export default function Home() {
     } else if (isOrange) {
       setFinalForm('gelb');
     } else {
-      setFinalForm('grün');
+      if (allMeds.length > 0) {
+        setFinalForm('grün');
+      }
     }
   }
 
@@ -151,12 +154,9 @@ export default function Home() {
     // API aufrufen, um den Medikamentenstatus zu überprüfen
 
     try {
-      const data = await fetchMedicationStatus({
-        country: formInput.country,
-        tripDuration: formInput.travelDuration,
-        medications: allMeds,
-      });
-      setApiResult(data);
+      const data = loadData();
+      data.then((result) => setApiResult(result));
+      checkFormSwitch();
       switchToNextForm();
     } catch (error) {
       showToast('😦 Fehler beim Abrufen des Medikamentenstatus');
@@ -172,13 +172,10 @@ export default function Home() {
     return data;
   }
   useEffect(() => {
-    console.log('ÄNDERUNG ! ');
-
     const data = loadData();
     data.then((result) => setApiResult(result));
     checkFormSwitch();
   }, [allMeds]);
-  console.log((formNumber / formList.length) * 100);
 
   return (
     <main

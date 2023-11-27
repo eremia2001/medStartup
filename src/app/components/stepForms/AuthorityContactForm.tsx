@@ -3,13 +3,13 @@ import StepForm from '../StepForm';
 
 import Checklist from '../Checkliste';
 
-const AuthorityContactForm = () => {
+const AuthorityContactForm = ({ number }) => {
   // Download-Funktion
 
   return (
     <div className="">
       <StepForm
-        title="3. Behörde "
+        title={`${number}. Behörde`}
         specialTitle="kontaktieren"
         subtitle="Bitte kontaktieren Sie folgende Behörde um nähere Informationen zu ihren Medikamenten zu erhalten "
       >
