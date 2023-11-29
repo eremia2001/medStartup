@@ -10,9 +10,7 @@ function InputField({
   inputType,
   value,
   errorMessage,
-  className,
   name,
-  addingError,
   selectOptions,
   handleMedChange,
 }) {
@@ -25,11 +23,13 @@ function InputField({
   };
 
   return (
-    <div className={`${className}`}>
+    <div className="flex flex-col  items-center justify-center  ">
       <div
-        className={`p-2 flex flex-row gap-2 items-center border-2 border-[#D3E7FF] rounded-lg mt-10 w-[300px] select-none `}
+        className={`p-2 flex flex-row gap-2 items-center  border-2 border-[#D3E7FF] w-3/4  rounded-lg  select-none   `}
       >
-        {IconComponent && <IconComponent color="#6C63FF" size={30} />}
+        {IconComponent && (
+          <IconComponent color="#6C63FF" size={30} className="" />
+        )}
         {inputType === 'select' ? (
           <Select
             onInputChange={(inputValue, { action }) => {
@@ -41,7 +41,7 @@ function InputField({
             options={selectOptions}
             placeholder={placeholder}
             classNamePrefix="react-select"
-            className="w-full "
+            className="w-full  "
             instanceId={name}
             styles={customStyles}
             value={value ? { value: value, label: `${value}` } : null}
@@ -58,15 +58,10 @@ function InputField({
           />
         )}
       </div>
-      {errorMessage ? (
-        <p className="text-error font-medium ">{errorMessage}</p>
-      ) : (
-        ''
-      )}
-      {addingError ? (
-        <p className="text-error font-medium ">{addingError}</p>
-      ) : (
-        ''
+      {errorMessage && (
+        <div className="w-3/4 text-left">
+          <p className="text-error font-medium">{errorMessage}</p>
+        </div>
       )}
     </div>
   );

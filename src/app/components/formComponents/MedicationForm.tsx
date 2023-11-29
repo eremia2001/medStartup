@@ -32,7 +32,7 @@ function MedicationForm({
           value: formInput.medication,
           name: 'medication',
           onInputChange: handleSelectChange,
-          addingError: errorMsg.medicationError,
+          errorMessage: errorMsg.medicationError,
           selectOptions: options,
           handleMedChange: handleMedChange,
         },
@@ -43,7 +43,7 @@ function MedicationForm({
           value: formInput.medicationQuant,
           name: 'medicationQuant',
           onInputChange: handleInput,
-          addingError: errorMsg.quantityError,
+          errorMessage: errorMsg.quantityError,
         },
       ]}
       handleSumbitForm={handlingMedForm}
@@ -54,9 +54,9 @@ function MedicationForm({
       <button
         onClick={checkMedication}
         type="button"
-        className="mt-5 bg-secondary text-3xl font-bold text-white rounded-lg w-fit px-3 "
+        className="mt-5 bg-secondary text-lg   text-white rounded-lg w-fit px-3 mx-auto sm:mx-0  "
       >
-        +
+        Hinzufügen
       </button>
 
       <div className="flex flex-row justify-between mt-5 font-bold">

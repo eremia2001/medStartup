@@ -179,7 +179,7 @@ export default function Home() {
 
   return (
     <main
-      className={`flex min-h-screen px-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
+      className={`flex min-h-screen p-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
     >
       <ToastContainer />
       <AnimatePresence>
@@ -218,15 +218,14 @@ export default function Home() {
                 height={500}
                 className="absolute bottom-20 right-2 hidden xl:block z-0"
               />
-              <div className="flex flex-col items-center gap-4 mx-auto mt-20  ">
-                <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold">
-                  Willkommen bei MEOW !{' '}
+              <div className="flex flex-col items-center gap-2 mx-auto mt-10 text-center  ">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
+                  Willkommen bei MediCarry !{' '}
                 </h1>
-                <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold">
-                  {' '}
+                <h2 className="text-2xl sm:text-3xl  md:text-4xl lg:text-5xl font-bold">
                   <span className="text-primary">Reisen</span> leicht gemacht{' '}
                 </h2>
-                <p className="text-subline lg:text-lg">
+                <p className="text-subline  lg:text-lg ">
                   Informieren, einpacken und los! Ihr Gesundheitsbegleiter auf
                   jeder Reise.
                 </p>

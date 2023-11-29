@@ -80,11 +80,13 @@ export default function Form({
           />
         </motion.div>
       )}
-      <h1 className="mx-auto text-2xl lg:text-3xl font-semibold">{title}</h1>
-      <div className=" w-full grid grid-cols-fluid gap-3">
+      <h1 className="mx-auto text-[22px] sm:text-2xl  lg:text-3xl font-semibold text-center">
+        {title}
+      </h1>
+      <div className="grid grid-cols-fluid gap-3 mt-10">
         {inputFields.map((field) => (
           <InputField
-            className={`${inputFields.length === 1 ? 'mx-auto' : ''}`}
+            className={`${inputFields.length === 1 ? '' : ''}`}
             key={field.placeholder}
             errorMessage={errors[field.name]}
             {...field}
