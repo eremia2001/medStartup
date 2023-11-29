@@ -72,18 +72,18 @@ function GelbForm({
       functionality="countryInput"
       handlePriorForm={handlePriorForm}
     >
-      <p className="text-subline mx-auto text-sm font-semibold">
+      <p className="text-subline mx-auto text-sm font-semibold text-center mt-[-35px]">
         Einige Medikamente erfordern{' '}
         <span className="font-bold text-[#D63031]"> zusätzliche Dokumente</span>{' '}
         für Thailand
       </p>
 
-      <div className="flex flex-row  items-center mt-10 justify-between">
+      <div className="flex flex-row  items-center  flex-wrap mt-10 justify-center md:justify-between gap-5">
         <Status apiResult={apiResult} medList={medList} deleteMed={deleteMed} />
         <ChecklistContainer items={displayChecklist} />
       </div>
-      <div className="flex flex-col gap-10 mt-10">
-        <div>
+      <div className=" mt-10">
+        <div className="flex flex-col gap-14">
           {statusExistsInApiResult('gelb') && (
             <>
               <DownloadForm number={startNumberForGelb} />

@@ -66,13 +66,13 @@ export default function Form({
       onSubmit={
         functionality == 'medicationInput' ? handleSumbitForm : handleSubmit
       }
-      className="relative py-5 px-16 bg-white shadow-2xl rounded-md flex flex-col  max-w-[900px] mx-auto z-50"
+      className="relative py-5 md:px-16 px-5  bg-white shadow-2xl rounded-md flex flex-col  max-w-[1080px] mx-auto z-50 "
     >
       {id !== 1 && (
         <motion.div
           onClick={handlePriorForm}
           whileHover={{ scale: 1.3 }}
-          className="absolute left-5"
+          className="mb-5 w-fit md:mx-[-45px]"
         >
           <FaArrowLeft
             size={20}
@@ -83,7 +83,7 @@ export default function Form({
       <h1 className="mx-auto text-[22px] sm:text-2xl  lg:text-3xl font-semibold text-center">
         {title}
       </h1>
-      <div className="grid grid-cols-fluid gap-3 mt-10">
+      <div className="grid grid-cols-fluid gap-3 mt-10  ">
         {inputFields.map((field) => (
           <InputField
             className={`${inputFields.length === 1 ? '' : ''}`}

@@ -18,8 +18,10 @@ const DownloadForm = ({ number }) => {
           href={fileUrl}
           download={true}
         >
-          <FaDownload size={50} className="text-secondary" />
-          <p>Klicken Sie hier, um das Formular herunterzuladen</p>
+          <FaDownload size={50} className="text-secondary w-10 md:w-3/4" />
+          <p className="text-xs text-subline text-center md:text-base italic ">
+            Klicken Sie hier, um das Formular herunterzuladen
+          </p>
         </a>
       </StepForm>
     </div>

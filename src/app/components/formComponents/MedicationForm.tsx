@@ -73,7 +73,7 @@ function MedicationForm({
           <div className="flex items-center">
             <span> {med.amount}</span>
             <BsTrash
-              className="translate-x-10 cursor-pointer text-lg md:text-xl lg:text-2xl text-secondary "
+              className="translate-x-3 md:translate-x-10  cursor-pointer text-lg md:text-xl lg:text-2xl text-secondary "
               onClick={() => deleteMed(index)}
             />
           </div>

@@ -219,10 +219,10 @@ export default function Home() {
                 className="absolute bottom-20 right-2 hidden xl:block z-0"
               />
               <div className="flex flex-col items-center gap-2 mx-auto mt-10 text-center  ">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
                   Willkommen bei MediCarry !{' '}
                 </h1>
-                <h2 className="text-2xl sm:text-3xl  md:text-4xl lg:text-5xl font-bold">
+                <h2 className="text-3xl  md:text-4xl lg:text-5xl font-bold">
                   <span className="text-primary">Reisen</span> leicht gemacht{' '}
                 </h2>
                 <p className="text-subline  lg:text-lg ">
@@ -238,7 +238,7 @@ export default function Home() {
 
       <AnimatePresence mode="wait">
         <motion.div
-          className="mx-auto w-full mt-28"
+          className="mx-auto w-full mt-20 lg:mt-28"
           key={formNumber}
           initial={{ x: -300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -251,7 +251,7 @@ export default function Home() {
         percent={(formNumber / formList.length) * 100}
         strokeWidth={1}
         strokeColor="#6C63FF"
-        className="max-w-[900px] mx-auto "
+        className="max-w-[1080px] mx-auto "
       />
     </main>
   );
