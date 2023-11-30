@@ -58,11 +58,12 @@ function InputField({
           />
         )}
       </div>
-      {errorMessage && (
-        <div className="w-3/4 text-left">
-          <p className="text-error font-medium">{errorMessage}</p>
-        </div>
-      )}
+      <div className="w-3/4 text-left">
+        <p className={`${errorMessage ? 'hidden' : 'text-transparent'}`}>
+          Unsichtbarer Fehler
+        </p>
+        <p className="text-error font-medium">{errorMessage}</p>
+      </div>
     </div>
   );
 }
