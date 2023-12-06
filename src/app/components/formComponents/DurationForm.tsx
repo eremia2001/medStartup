@@ -1,7 +1,7 @@
 // components/DurationForm.js
-import React from "react";
-import Form from "../Form";
-import { GoNumber } from "react-icons/go";
+import React from 'react';
+import Form from '../Form';
+import { GoNumber } from 'react-icons/go';
 
 function DurationForm({
   onInputChange,
@@ -14,11 +14,10 @@ function DurationForm({
       title="Wie lange dauert Ihr Aufenthalt ? "
       inputFields={[
         {
-          IconComponent: GoNumber,
-          placeholder: "Tage",
-          name: "travelDuration",
+          placeholder: 'Tage',
+          name: 'travelDuration',
           value: inputValue,
-          inputType: "number",
+          inputType: 'number',
           onInputChange: onInputChange,
         },
       ]}

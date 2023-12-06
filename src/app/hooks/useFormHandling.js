@@ -5,7 +5,7 @@ export function useFormHandling() {
   const [formInput, setFormInput] = useState({
     medication: '',
     medicationQuant: 0,
-    travelDuration: '',
+    travelDuration: 0,
     country: '',
   });
   const [formNumber, setFormNumber] = useState(1);

@@ -16,7 +16,7 @@ function CountryForm({
       inputFields={[
         {
           IconComponent: PiAirplaneLandingFill,
-          placeholder: 'Flug',
+          placeholder: 'Zielland',
           name: 'country',
           value: inputValue,
           inputType: 'select',

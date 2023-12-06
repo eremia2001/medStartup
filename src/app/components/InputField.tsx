@@ -49,7 +49,7 @@ function InputField({
         ) : (
           <input
             type={inputType}
-            value={value}
+            value={value == 0 ? '' : value}
             {...(inputType === 'number' ? { min: 0 } : {})}
             placeholder={placeholder}
             onChange={(e) => onInputChange(e)}

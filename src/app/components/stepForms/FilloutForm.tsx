@@ -14,7 +14,6 @@ const FilloutForm = ({ medChecklist, number }) => {
         specialTitle="ausfüllen"
         subtitle="für folgende Medikamente müssen Sie unser Formular ausfüllen :"
       >
-        <Checklist items={medChecklist} />
         <p className="mt-10 text-xs lg:text-sm xl:text-base mx-auto ">
           <span className="font-bold">Hinweis :</span> Dieses Formular müssen
           Sie von ihrem Arzt unterschreiben lassen !{' '}

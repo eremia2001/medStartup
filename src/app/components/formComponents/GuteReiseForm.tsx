@@ -37,12 +37,6 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
           </div>
         </div>
       </div>
-      <h1 className="text-black font-semibold text-2xl mx-auto mt-8">
-        wichtige Hinweise
-      </h1>
-      <div className="mt-6 ">
-        <Hints />
-      </div>
     </Form>
   );
 }

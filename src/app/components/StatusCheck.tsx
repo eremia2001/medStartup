@@ -7,7 +7,8 @@ import {
 
 const Check = ({ medName, checkStatus }) => {
   let icon;
-  let divStyle = 'rounded-full w-6 h-6 px-0.5 flex items-center justify-center';
+  let divStyle =
+    'rounded-full w-6 h-6 px-0.5 flex items-center justify-center ';
 
   switch (checkStatus) {
     case 'rot':
@@ -20,23 +21,23 @@ const Check = ({ medName, checkStatus }) => {
       break;
     case 'gelb':
       icon = null; // Kein Icon für gelb
-      divStyle += ' bg-white border border-subline';
+      divStyle += '  border  bg-[#F4B34B]';
       break;
     case 'orange':
       icon = (
-        <AiOutlineExclamation className="w-full h-full text-orange-500 font-bold" />
+        <AiOutlineExclamation className="w-full h-full text-black font-bold" />
       );
-      divStyle += ' bg-white border border-subline';
+      divStyle += '  border  bg-[#F4B34B] ';
       break;
     default:
       // Standardfall oder unbekannter Status
       icon = null;
-      divStyle += ' bg-white';
+      divStyle += ' ';
   }
 
   return (
-    <div className="flex flex-row gap-3">
-      <div className={divStyle}>{icon}</div>
+    <div className="flex flex-row gap-3 ">
+      <div className={`${divStyle}`}>{icon}</div>
       <p className="text-black font-medium">{medName}</p>
     </div>
   );

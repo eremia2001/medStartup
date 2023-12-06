@@ -38,7 +38,7 @@ function MedicationForm({
         },
         {
           IconComponent: GoNumber,
-          placeholder: 'Anzahl',
+          placeholder: 'Anzahl der Tabletten',
           inputType: 'number',
           value: formInput.medicationQuant,
           name: 'medicationQuant',
@@ -54,7 +54,7 @@ function MedicationForm({
       <button
         onClick={checkMedication}
         type="button"
-        className="mt-5 bg-secondary text-lg   text-white rounded-lg w-fit px-3 mx-auto sm:mx-0  "
+        className="mt-5 bg-secondary text-lg   text-white rounded-lg w-fit px-3 mx-auto hover:scale-110 duration-200  "
       >
         Hinzufügen
       </button>
@@ -73,7 +73,7 @@ function MedicationForm({
           <div className="flex items-center">
             <span> {med.amount}</span>
             <BsTrash
-              className="translate-x-3 md:translate-x-10  cursor-pointer text-lg md:text-xl lg:text-2xl text-secondary "
+              className="translate-x-3 md:translate-x-10  cursor-pointer text-lg md:text-xl lg:text-2xl text-secondary hover:scale-110 duration-200 "
               onClick={() => deleteMed(index)}
             />
           </div>

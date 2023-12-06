@@ -31,7 +31,7 @@ const Status = ({ medList, apiResult, deleteMed }) => {
           <div key={med.name} className="flex flex-row  justify-between">
             <StatusCheck medName={med.name} checkStatus={getStatus(med.name)} />
             <BsTrash
-              className=" mx-3 cursor-pointer text-lg md:text-xl lg:text-xl text-secondary "
+              className=" mx-3 cursor-pointer text-lg md:text-xl lg:text-xl text-secondary hover:scale-125 duration-200"
               onClick={() => deleteMed(index)}
             />
           </div>

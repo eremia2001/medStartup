@@ -6,7 +6,6 @@ import checklistItems from '../../data/checklistItems';
 import Checkliste from '../Checkliste';
 import DownloadForm from '../stepForms/DownloadForm';
 import FilloutForm from '../stepForms/FilloutForm';
-import AuthorityInformForm from '../stepForms/AuthorityInformForm';
 import AuthorityContactForm from '../stepForms/AuthorityContactForm';
 import ChecklistContainer from '../ChecklistContainer';
 function GelbForm({
@@ -18,17 +17,22 @@ function GelbForm({
 }) {
   const [displayChecklist, setDisplayChecklist] = useState(checklistItems);
 
+  const filterToStatus = (statuses) => {
+    return medList.filter((med) => statuses.includes(getStatus(med.name)));
+  };
   const statusExistsInApiResult = (status) => {
     return Boolean(apiResult.find((element) => element.status === status));
   };
-  const startNumberForGelb = statusExistsInApiResult('gelb') ? 1 : null;
-  const startNumberForOrange = statusExistsInApiResult('gelb')
-    ? statusExistsInApiResult('orange')
-      ? 3
-      : 1
-    : statusExistsInApiResult('orange')
-    ? 1
-    : null;
+  const startNumberForGelb = 1;
+  const startNumberForOrange = 2;
+  // const startNumberForGelb = statusExistsInApiResult('gelb') ? 1 : null;
+  // const startNumberForOrange = statusExistsInApiResult('gelb')
+  //   ? statusExistsInApiResult('orange')
+  //     ? 3
+  //     : 1
+  //   : statusExistsInApiResult('orange')
+  //   ? 1
+  //   : null;
 
   useEffect(() => {
     // Aktualisieren von displayChecklist, wenn sich apiResult oder checklistItems ändert
@@ -37,6 +41,11 @@ function GelbForm({
     );
     setDisplayChecklist(updatedDisplayChecklist);
   }, [medList, apiResult]);
+  const bothYellowAndOrangeExist =
+    statusExistsInApiResult('gelb') && statusExistsInApiResult('orange');
+  const yellowAndOrangeMedList = bothYellowAndOrangeExist
+    ? filterToStatus(['gelb', 'orange'])
+    : [];
 
   function getStatus(medName) {
     const isRot = apiResult.find((element) => {
@@ -59,10 +68,6 @@ function GelbForm({
     }
   }
 
-  const filterToStatus = (status) => {
-    return medList.filter((med) => getStatus(med.name) == status);
-  };
-
   return (
     <Form
       title="Achtung Reiseinformation ! "
@@ -84,22 +89,42 @@ function GelbForm({
       </div>
       <div className=" mt-10">
         <div className="flex flex-col gap-14">
-          {statusExistsInApiResult('gelb') && (
-            <>
-              <DownloadForm number={startNumberForGelb} />
-              <FilloutForm
-                medChecklist={filterToStatus('gelb')}
-                number={startNumberForGelb + 1}
+          {bothYellowAndOrangeExist ? (
+            <div>
+              {' '}
+              <DownloadForm
+                number={startNumberForGelb}
+                medChecklist={yellowAndOrangeMedList}
               />
-            </>
-          )}
-          {statusExistsInApiResult('orange') && (
-            <>
-              <AuthorityInformForm
-                medChecklist={filterToStatus('orange')}
+              <AuthorityContactForm
+                medChecklist={filterToStatus(['orange'])}
                 number={startNumberForOrange}
-              />
-              <AuthorityContactForm number={startNumberForOrange + 1} />
+              />{' '}
+            </div>
+          ) : (
+            <>
+              {statusExistsInApiResult('gelb') && (
+                <DownloadForm
+                  number={startNumberForGelb}
+                  medChecklist={filterToStatus(['gelb'])}
+                />
+              )}
+              {statusExistsInApiResult('orange') && (
+                <>
+                  <DownloadForm
+                    number={startNumberForGelb}
+                    medChecklist={filterToStatus(['orange'])}
+                  />
+                  <AuthorityInformForm
+                    medChecklist={filterToStatus(['orange'])}
+                    number={startNumberForOrange}
+                  />
+                  <AuthorityContactForm
+                    number={startNumberForOrange + 1}
+                    medChecklist={filterToStatus(['orange'])}
+                  />
+                </>
+              )}
             </>
           )}
         </div>

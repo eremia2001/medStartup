@@ -3,7 +3,7 @@ import StepForm from '../StepForm';
 
 import Checklist from '../Checkliste';
 
-const AuthorityContactForm = ({ number }) => {
+const AuthorityContactForm = ({ number, medChecklist }) => {
   // Download-Funktion
 
   return (
@@ -11,9 +11,12 @@ const AuthorityContactForm = ({ number }) => {
       <StepForm
         title={`${number}. Behörde`}
         specialTitle="kontaktieren"
-        subtitle="Bitte kontaktieren Sie folgende Behörde um nähere Informationen zu ihren Medikamenten zu erhalten "
+        subtitle="folgende Medikamente brauchen eine besondere Genehmigung von der zuständigen Behörde : "
       >
-        <div className="flex flex-col mx-auto ">
+        <Checklist items={medChecklist} />
+
+        <h1 className="font-bold text-2xl mx-auto my-10"> Kontaktdaten</h1>
+        <div className="flex flex-col mx-auto gap-2 shadow-2xl p-5">
           <p>
             <span className="font-bold">Telefon : </span> (66) 2590 7346{' '}
           </p>
@@ -21,11 +24,6 @@ const AuthorityContactForm = ({ number }) => {
             <span className="font-bold">Email :</span> drug.fda-moph.go.th
           </p>
         </div>
-
-        <p className="mt-10 text-xs mx-auto ">
-          <span className="font-bold">Hinweis :</span> Dieses Formular müssen
-          Sie von ihrem Arzt unterschreiben lassen !{' '}
-        </p>
       </StepForm>
     </div>
   );
