@@ -66,16 +66,14 @@ export default async function handler(
   }
 
   function getStatus(wirkstoff) {
-    console.log('Gesucht wird nach:  ', wirkstoff);
     const result = drug_status.find(
-      (drug) => drug.wirkstoff == wirkstoff && country
+      (drug) => drug.wirkstoff == wirkstoff && country == drug.land
     );
     return result?.status;
   }
 
   try {
     // Senden Sie das geflachte Ergebnis zurück
-    console.log(medications);
     const results = medications.map((med) => ({
       name: med.name,
       status: getStatus(getWirkstoff(med.name)),

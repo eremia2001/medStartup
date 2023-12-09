@@ -8,6 +8,7 @@ import DownloadForm from '../stepForms/DownloadForm';
 import FilloutForm from '../stepForms/FilloutForm';
 import AuthorityContactForm from '../stepForms/AuthorityContactForm';
 import ChecklistContainer from '../ChecklistContainer';
+import { getStatus } from '../../utils/utils';
 function GelbForm({
   handleSumbitForm,
   handlePriorForm,
@@ -18,21 +19,15 @@ function GelbForm({
   const [displayChecklist, setDisplayChecklist] = useState(checklistItems);
 
   const filterToStatus = (statuses) => {
-    return medList.filter((med) => statuses.includes(getStatus(med.name)));
+    return medList.filter((med) =>
+      statuses.includes(getStatus(apiResult, med.name))
+    );
   };
   const statusExistsInApiResult = (status) => {
     return Boolean(apiResult.find((element) => element.status === status));
   };
   const startNumberForGelb = 1;
   const startNumberForOrange = 2;
-  // const startNumberForGelb = statusExistsInApiResult('gelb') ? 1 : null;
-  // const startNumberForOrange = statusExistsInApiResult('gelb')
-  //   ? statusExistsInApiResult('orange')
-  //     ? 3
-  //     : 1
-  //   : statusExistsInApiResult('orange')
-  //   ? 1
-  //   : null;
 
   useEffect(() => {
     // Aktualisieren von displayChecklist, wenn sich apiResult oder checklistItems ändert
@@ -46,27 +41,6 @@ function GelbForm({
   const yellowAndOrangeMedList = bothYellowAndOrangeExist
     ? filterToStatus(['gelb', 'orange'])
     : [];
-
-  function getStatus(medName) {
-    const isRot = apiResult.find((element) => {
-      return element.name == medName && element.status == 'rot';
-    });
-    const isGelb = apiResult.find((element) => {
-      return element.name == medName && element.status == 'gelb';
-    });
-    const isOrange = apiResult.find((element) => {
-      return element.name == medName && element.status == 'orange';
-    });
-    if (isRot) {
-      return 'rot';
-    } else if (isGelb) {
-      return 'gelb';
-    } else if (isOrange) {
-      return 'orange';
-    } else {
-      return 'grün';
-    }
-  }
 
   return (
     <Form
@@ -115,10 +89,7 @@ function GelbForm({
                     number={startNumberForGelb}
                     medChecklist={filterToStatus(['orange'])}
                   />
-                  <AuthorityInformForm
-                    medChecklist={filterToStatus(['orange'])}
-                    number={startNumberForOrange}
-                  />
+
                   <AuthorityContactForm
                     number={startNumberForOrange + 1}
                     medChecklist={filterToStatus(['orange'])}
