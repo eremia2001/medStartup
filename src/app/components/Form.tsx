@@ -83,7 +83,11 @@ export default function Form({
       <h1 className="mx-auto text-[22px] sm:text-2xl  lg:text-3xl font-semibold text-center">
         {title}
       </h1>
-      <div className="grid grid-cols-fluid gap-3 mt-10  ">
+      <div
+        className={`${
+          functionality == 'greenForm' ? 'mt-0 ' : 'mt-10'
+        } grid grid-cols-fluid gap-3`}
+      >
         {inputFields.map((field) => (
           <InputField
             className={`${inputFields.length === 1 ? '' : ''}`}

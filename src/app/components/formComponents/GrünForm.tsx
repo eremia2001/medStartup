@@ -1,18 +1,18 @@
-// components/GuteReiseForm.js
+// components/GrünForm.js
 import React from 'react';
 import Form from '../Form';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import Check from '../Check';
 import Hints from '../Hints';
 
-function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
+function GrünForm({ handleSumbitForm, handlePriorForm, medList }) {
   return (
     <Form
       title="Alles klar für ihre Reise ! "
       inputFields={[]}
       handleSumbitForm={handleSumbitForm}
       id={4}
-      functionality="countryInput"
+      functionality="greenForm"
       handlePriorForm={handlePriorForm}
     >
       <p className="text-subline mx-auto text-sm font-semibold">
@@ -41,4 +41,4 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
   );
 }
 
-export default GuteReiseForm;
+export default GrünForm;

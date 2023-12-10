@@ -11,9 +11,11 @@ import { useFormHandling } from './hooks/useFormHandling';
 import { useMedOptions } from './hooks/useMedOptions';
 import { fetchMedicationStatus } from '../app/utils/api';
 import { Nunito } from 'next/font/google';
-import { Line } from 'rc-progress';
-
+import Demo from './pageComponents/Demo';
+import HowTo from './pageComponents/HowTo';
 import { useToast } from './hooks/useToast';
+import Title from './components/Title';
+
 import {
   CountryForm,
   DurationForm,
@@ -22,6 +24,7 @@ import {
 } from './components/formComponents';
 import { useEffect, useState } from 'react';
 import { resolve } from 'path';
+import { useInView } from 'react-intersection-observer';
 const inter = Nunito({
   subsets: ['latin'],
   display: 'swap',
@@ -184,6 +187,10 @@ export default function Home() {
     checkFormSwitch();
   }, [allMeds]);
 
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1, // Ändern Sie den Threshold-Wert nach Bedarf
+  });
   return (
     <main
       className={`flex min-h-screen p-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
@@ -211,7 +218,7 @@ export default function Home() {
                 height={500}
                 className=" w-[16vw]  absolute top-20 right-10 hidden xl:block"
               />
-              <Image
+              {/* <Image
                 src={WomanIlustration}
                 alt="."
                 width={200}
@@ -224,14 +231,14 @@ export default function Home() {
                 width={500}
                 height={500}
                 className="absolute bottom-20 right-2 hidden xl:block z-0"
-              />
+              /> */}
               <div className="flex flex-col items-center gap-2 mx-auto mt-10 text-center  ">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
-                  Willkommen bei MediCarry !{' '}
-                </h1>
+                <Title title="Willkommen bei moouv ! " />
+
                 <h2 className="text-3xl  md:text-4xl lg:text-5xl font-bold">
                   <span className="text-primary">Reisen</span> leicht gemacht{' '}
                 </h2>
+
                 <p className="text-subline  lg:text-lg ">
                   Informieren, einpacken und los! Ihr Gesundheitsbegleiter auf
                   jeder Reise.
@@ -243,23 +250,19 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          className="mx-auto w-full mt-20 lg:mt-28"
-          key={formNumber}
-          initial={{ x: -300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 300, opacity: 0 }}
-        >
-          {formList[formNumber - 1]}
-        </motion.div>
-      </AnimatePresence>
-      <Line
-        percent={(formNumber / formList.length) * 100}
-        strokeWidth={1}
-        strokeColor="#6C63FF"
-        className="max-w-[1080px] mx-auto "
-      />
+      <Demo formNumber={formNumber} formList={formList} />
+      <HowTo inView={inView} ref={ref} />
+      <div className="mx-auto text-center mt-20">
+        <h1 className=" font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl ">
+          Sorglos Reisen mit
+        </h1>
+        <h2 className="text-2xl  md:text-3xl lg:text-4xl font-bold">
+          <span className="text-primary">Medikamentenüberprüfung</span>
+        </h2>
+        <p className="text-subline  lg:text-lg ">
+          Drei Schritte zur sicheren Reise: So funktioniert unser Service
+        </p>
+      </div>
     </main>
   );
 }

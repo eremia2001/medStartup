@@ -1,11 +1,11 @@
-// components/GuteReiseForm.js
+// components/GrünForm.js
 import React from 'react';
 import Form from '../Form';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import Check from '../Check';
 import Hints from '../Hints';
 
-function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
+function GrünForm({ handleSumbitForm, handlePriorForm, medList }) {
   return (
     <Form
       title="Wichtige Reiseinformation "
@@ -41,4 +41,4 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
   );
 }
 
-export default GuteReiseForm;
+export default GrünForm;
