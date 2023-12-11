@@ -19,6 +19,7 @@ import Vision from './pageComponents/Vision';
 import { useToast } from './hooks/useToast';
 import Title from './components/Title';
 import Service from './pageComponents/Service';
+import FAQSection from './pageComponents/FAQSection';
 import {
   CountryForm,
   DurationForm,
@@ -262,6 +263,7 @@ export default function Home() {
       <HowTo inView={inView} ref={ref} />
       <Vision inView={inView2} ref={ref2} />
       <Service />
+      <FAQSection />
     </main>
   );
 }
