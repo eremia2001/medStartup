@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import WomanIlustration from './assets/illustration woman.png';
 import WomanIlustration2 from './assets/illustration woman2.png';
+import earth3d from './assets/earth3d.png';
+import plane from './assets/airplane.jpg';
 import crosses from './assets/kreuze.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ToastContainer, toast } from 'react-toastify';
@@ -13,6 +15,7 @@ import { fetchMedicationStatus } from '../app/utils/api';
 import { Nunito } from 'next/font/google';
 import Demo from './pageComponents/Demo';
 import HowTo from './pageComponents/HowTo';
+import Vision from './pageComponents/Vision';
 import { useToast } from './hooks/useToast';
 import Title from './components/Title';
 
@@ -25,6 +28,7 @@ import {
 import { useEffect, useState } from 'react';
 import { resolve } from 'path';
 import { useInView } from 'react-intersection-observer';
+import Link from 'next/link';
 const inter = Nunito({
   subsets: ['latin'],
   display: 'swap',
@@ -191,6 +195,10 @@ export default function Home() {
     triggerOnce: true,
     threshold: 0.1, // Ändern Sie den Threshold-Wert nach Bedarf
   });
+  const [ref2, inView2] = useInView({
+    triggerOnce: true,
+    threshold: 0.01, // Ändern Sie den Threshold-Wert nach Bedarf
+  });
   return (
     <main
       className={`flex min-h-screen p-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
@@ -252,17 +260,7 @@ export default function Home() {
 
       <Demo formNumber={formNumber} formList={formList} />
       <HowTo inView={inView} ref={ref} />
-      <div className="mx-auto text-center mt-20">
-        <h1 className=" font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl ">
-          Sorglos Reisen mit
-        </h1>
-        <h2 className="text-2xl  md:text-3xl lg:text-4xl font-bold">
-          <span className="text-primary">Medikamentenüberprüfung</span>
-        </h2>
-        <p className="text-subline  lg:text-lg ">
-          Drei Schritte zur sicheren Reise: So funktioniert unser Service
-        </p>
-      </div>
+      <Vision inView={inView2} ref={ref2} />
     </main>
   );
 }

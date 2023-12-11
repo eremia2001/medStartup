@@ -25,7 +25,7 @@ export default function RootLayout({
         {pathname !== '/Login' && (
           <header className="flex w-full h-max justify-between items-center p-2  bg-slate-100 shadow-lg ">
             <div>
-              <h2 className="font-bold text-2xl">MEDICARRY.</h2>
+              <h2 className="font-bold text-2xl">moouv.</h2>
             </div>
 
             <ul className="hidden md:flex gap-5 font-medium">
