@@ -37,7 +37,7 @@ const VisionItem = ({ imageFirst, title, desc, icon: Icon }) => {
   );
 
   return (
-    <div className="mx-auto flex flex-col sm:flex-row sm:justify-between gap-10 max-w-[1080px] shadow-lg p-10 border border-[#D9D9D9] rounded-3xl mt-10">
+    <div className="mx-auto flex flex-col sm:flex-row sm:justify-between gap-10 max-w-[1080px] shadow-lg p-10 border border-[#D9D9D9] rounded-3xl mt-10 hover:scale-105 duration-200 ease-in-out hover:shadow-2xl">
       {imageFirst ? imageSection : textSection}
       {imageFirst ? textSection : imageSection}
     </div>
