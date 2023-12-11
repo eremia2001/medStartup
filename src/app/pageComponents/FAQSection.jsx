@@ -3,7 +3,7 @@ import FAQItem from '../components/FAQItem';
 import faqItems from '../data/faqItems';
 const FAQSection = () => {
   return (
-    <div className="">
+    <div className="" id="faq">
       <div className="mx-auto text-center mt-20">
         <h1 className=" font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl ">
           Haben Sie noch Fragen ?

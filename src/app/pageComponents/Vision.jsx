@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Vision = forwardRef(({ inView }, ref) => {
   return (
-    <div>
+    <div id="vision">
       <div className="mx-auto text-center mt-20">
         <h1 className=" font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl ">
           Unsere <span className="text-primary">Vision</span>

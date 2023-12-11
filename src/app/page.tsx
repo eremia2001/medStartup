@@ -19,7 +19,10 @@ import Vision from './pageComponents/Vision';
 import { useToast } from './hooks/useToast';
 import Title from './components/Title';
 import Service from './pageComponents/Service';
+import { MdKeyboardArrowUp } from 'react-icons/md';
 import FAQSection from './pageComponents/FAQSection';
+import { Link as Link2 } from 'react-scroll';
+
 import {
   CountryForm,
   DurationForm,
@@ -39,6 +42,8 @@ export default function Home() {
   const [finalForm, setFinalForm] = useState('');
   const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
   const { showToast } = useToast();
   const {
     formInput,
@@ -96,7 +101,22 @@ export default function Home() {
   useEffect(() => {
     checkFormSwitch();
   }, [apiResult]);
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollTop);
+    return () => {
+      window.removeEventListener('scroll', checkScrollTop);
+    };
+  }, [showScrollButton]);
 
+  const checkScrollTop = () => {
+    if (!showScrollButton && window.pageYOffset > 300) {
+      // Zeige den Button, wenn der Nutzer mehr als 300px gescrollt hat
+      setShowScrollButton(true);
+    } else if (showScrollButton && window.pageYOffset <= 300) {
+      // Verberge den Button, wenn der Nutzer weniger als 300px gescrollt hat
+      setShowScrollButton(false);
+    }
+  };
   function checkFormSwitch() {
     const isEveryRed = apiResult.every((element) => {
       return element.status == 'rot';
@@ -203,6 +223,7 @@ export default function Home() {
   return (
     <main
       className={`flex min-h-screen p-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
+      id="demo"
     >
       <ToastContainer />
       <AnimatePresence>
@@ -264,6 +285,18 @@ export default function Home() {
       <Vision inView={inView2} ref={ref2} />
       <Service />
       <FAQSection />
+
+      <motion.div
+        className={`${
+          showScrollButton ? 'cursor-pointer' : 'cursor-none'
+        } p-3 rounded-full fixed bottom-10 right-5 border border-[#D9D9D9] hover:bg-secondary shadow-md hover:text-white duration-300 ease-in-out`}
+        animate={showScrollButton ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Link2 to="demo" smooth={true} duration={300}>
+          <MdKeyboardArrowUp size={20} />
+        </Link2>
+      </motion.div>
     </main>
   );
 }

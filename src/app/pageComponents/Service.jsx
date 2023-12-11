@@ -4,7 +4,7 @@ import serviceItems from '../data/serviceItems';
 
 const Service = () => {
   return (
-    <div>
+    <div id="service">
       <div className="mx-auto text-center mt-20">
         <h1 className=" font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl ">
           Unser <span className="text-primary">Service</span>

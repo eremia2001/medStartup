@@ -2,9 +2,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { usePathname } from 'next/navigation';
+import { Link } from 'react-scroll';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,22 +30,37 @@ export default function RootLayout({
 
             <ul className="hidden md:flex gap-5 font-medium">
               <li>
-                <Link href="/">Funktionen</Link>
+                <Link
+                  to="service"
+                  className="cursor-pointer"
+                  smooth={true}
+                  duration={800}
+                >
+                  Service
+                </Link>
+              </li>
+              <li className="cursor-pointer">
+                <Link to="vision" smooth={true} duration={800}>
+                  Vision
+                </Link>
               </li>
               <li>
-                <Link href="/">Preise</Link>
-              </li>
-              <li>
-                <Link href="/">Über uns</Link>
+                {' '}
+                <Link
+                  to="faq"
+                  className="cursor-pointer"
+                  smooth={true}
+                  duration={800}
+                >
+                  FAQ
+                </Link>
               </li>
             </ul>
-            <Link href="/Login">
-              <button
-                className={`hidden md:block bg-primary text-md text-white rounded-md px-3 py-2`}
-              >
-                Anmelden
-              </button>
-            </Link>
+            <button
+              className={`hidden md:block bg-primary text-md text-white rounded-md px-3 py-2`}
+            >
+              Anmelden
+            </button>
             <RxHamburgerMenu size={25} className="md:hidden cursor-pointer" />
           </header>
         )}
