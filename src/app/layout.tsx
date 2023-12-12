@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { usePathname } from 'next/navigation';
 import { Link } from 'react-scroll';
+import Footer from './pageComponents/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -76,6 +77,7 @@ export default function RootLayout({
           </header>
         )}
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -22,6 +22,7 @@ import Service from './pageComponents/Service';
 import Contact from './pageComponents/Contact';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import FAQSection from './pageComponents/FAQSection';
+import Footer from './pageComponents/Footer';
 import { Link as Link2 } from 'react-scroll';
 
 import {
