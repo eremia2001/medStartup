@@ -55,6 +55,17 @@ export default function RootLayout({
                   FAQ
                 </Link>
               </li>
+              <li>
+                {' '}
+                <Link
+                  to="contact"
+                  className="cursor-pointer"
+                  smooth={true}
+                  duration={800}
+                >
+                  Kontakt
+                </Link>
+              </li>
             </ul>
             <button
               className={`hidden md:block bg-primary text-md text-white rounded-md px-3 py-2`}

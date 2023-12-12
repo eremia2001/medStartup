@@ -19,6 +19,7 @@ import Vision from './pageComponents/Vision';
 import { useToast } from './hooks/useToast';
 import Title from './components/Title';
 import Service from './pageComponents/Service';
+import Contact from './pageComponents/Contact';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import FAQSection from './pageComponents/FAQSection';
 import { Link as Link2 } from 'react-scroll';
@@ -285,6 +286,7 @@ export default function Home() {
       <Vision inView={inView2} ref={ref2} />
       <Service />
       <FAQSection />
+      <Contact />
 
       <motion.div
         className={`${
