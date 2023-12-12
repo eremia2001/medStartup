@@ -288,18 +288,19 @@ export default function Home() {
       <Service />
       <FAQSection />
       <Contact />
-
-      <motion.div
-        className={`${
-          showScrollButton ? 'cursor-pointer' : 'cursor-none'
-        } p-3 rounded-full fixed bottom-10 right-5 border border-[#D9D9D9] hover:bg-secondary shadow-md hover:text-white duration-300 ease-in-out`}
-        animate={showScrollButton ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <Link2 to="demo" smooth={true} duration={300}>
+      <Link2 to="demo" smooth={true} duration={300}>
+        <motion.div
+          className={`${
+            showScrollButton ? 'cursor-pointer' : 'cursor-none'
+          } p-3 rounded-full fixed bottom-10 right-5 border border-[#D9D9D9] hover:bg-secondary shadow-md hover:text-white duration-300 ease-in-out`}
+          animate={
+            showScrollButton ? { opacity: 1 } : { opacity: 0, display: 'none' }
+          }
+          transition={{ duration: 0.3 }}
+        >
           <MdKeyboardArrowUp size={20} />
-        </Link2>
-      </motion.div>
+        </motion.div>
+      </Link2>
     </main>
   );
 }

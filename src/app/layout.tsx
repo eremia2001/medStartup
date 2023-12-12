@@ -6,6 +6,9 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { usePathname } from 'next/navigation';
 import { Link } from 'react-scroll';
 import Footer from './pageComponents/Footer';
+import logo from './assets/logoBlack.svg';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,14 +22,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   return (
     <html lang="en" className="">
       <body className={inter.className}>
         {pathname !== '/Login' && (
-          <header className="flex w-full h-max justify-between items-center p-2  bg-slate-100 shadow-lg ">
+          <header className="flex w-full h-max justify-between items-center py-2 px-4  bg-slate-100 shadow-lg ">
             <div>
-              <h2 className="font-bold text-2xl">moouv.</h2>
+              <Image
+                src={logo}
+                alt="moouv"
+                width={200}
+                height={200}
+                className="w-40 sm:w-48"
+              />
             </div>
 
             <ul className="hidden md:flex gap-5 font-medium">

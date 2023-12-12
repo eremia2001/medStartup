@@ -72,35 +72,37 @@ const Footer = () => {
           alt="Picture of the author"
           className="lg:translate-y-10 hidden lg:block"
         />
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 items-center md:items-start">
           <h1 className="font-semibold text-xl xl:text-2xl">
             Bleiben Sie in Verbindung
           </h1>
-          <p className="font-semibold">
-            Email : <span className="font-light">moouve@web.de</span>
-          </p>
-          <p className="font-semibold">
-            Telefon : <span className="font-light">0176/2893 1829</span>
-          </p>
-          <div className="flex flex-row items-center gap-2 mx-auto">
-            <Image
-              src={linkedIn}
-              width={50}
-              height={50}
-              alt="linkedin"
-              className="w-10"
-            />
-            <p>Moouve</p>
-          </div>
-          <div className="flex flex-row items-center gap-2 mx-auto">
-            <Image
-              src={instagram}
-              width={50}
-              height={50}
-              alt="linkedin"
-              className="w-10"
-            />
-            <p>@moouve</p>
+          <div className="flex flex-col h-full justify-evenly gap-5 ">
+            <p className="font-semibold">
+              Email : <span className="font-light">moouve@web.de</span>
+            </p>
+            <p className="font-semibold">
+              Telefon : <span className="font-light">0176/2893 1829</span>
+            </p>
+            <div className="flex flex-row items-center gap-2 mx-auto">
+              <Image
+                src={linkedIn}
+                width={50}
+                height={50}
+                alt="linkedin"
+                className="w-10"
+              />
+              <p>Moouve</p>
+            </div>
+            <div className="flex flex-row items-center gap-2 mx-auto translate-x-2 ">
+              <Image
+                src={instagram}
+                width={50}
+                height={50}
+                alt="instagram"
+                className="w-10"
+              />
+              <p>@moouve</p>
+            </div>
           </div>
         </div>
       </div>
