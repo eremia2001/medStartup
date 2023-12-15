@@ -4,11 +4,12 @@ import logo from '../assets/logo.svg';
 import linkedIn from '../assets/linkedIn.svg';
 import instagram from '../assets/instagram.svg';
 import Image from 'next/image';
-import { Link } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <div className="bg-[#2C3E50] flex flex-col gap-5  lg:flex-row  items-center  justify-evenly p-5  overflow-hidden text-white">
+    <div className="bg-[#2C3E50] flex flex-col gap-5  lg:flex-row  items-center  justify-evenly p-5  overflow-hidden text-white  ">
       <div className="flex flex-col items-center  lg:items-start mx-auto">
         <div className="w-48 translate-x-6">
           <Image
@@ -32,34 +33,30 @@ const Footer = () => {
         <h1 className="text-xl mt-6  font-semibold  ">Nützliche Links</h1>
         <ul className="flex flex-col gap-2">
           <li className="cursor-pointer">
-            <Link to="vision" smooth={true} duration={800}>
+            <ScrollLink to="vision" smooth={true} duration={800}>
               Unsere Vision
-            </Link>
+            </ScrollLink>
           </li>
           <li className="cursor-pointer">
-            <Link to="service" smooth={true} duration={800}>
+            <ScrollLink to="service" smooth={true} duration={800}>
               Unser Service
-            </Link>
+            </ScrollLink>
           </li>
           <li className="cursor-pointer">
-            <Link to="fuq" smooth={true} duration={800}>
+            <ScrollLink to="fuq" smooth={true} duration={800}>
               FUQ
-            </Link>
+            </ScrollLink>
           </li>
           <li className="cursor-pointer">
-            <Link to="contact" smooth={true} duration={800}>
+            <ScrollLink to="contact" smooth={true} duration={800}>
               Kontakt
-            </Link>
+            </ScrollLink>
           </li>
           <li className="cursor-pointer">
-            <Link to="vision" smooth={true} duration={800}>
-              Impressum
-            </Link>
+            <Link href="/Impressum">Impressum</Link>
           </li>
           <li className="cursor-pointer">
-            <Link to="vision" smooth={true} duration={800}>
-              Datenschutzrichtlinie
-            </Link>
+            <Link href="/Datenschutz">Datenschutzrichtlinie</Link>
           </li>
         </ul>
       </div>
