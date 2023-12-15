@@ -17,10 +17,10 @@ const Service = () => {
         </p>
       </div>
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-x-20 gap-y-10  max-w-[1080px] mt-20">
-        {serviceItems.map((item) => {
+        {serviceItems.map((item, index) => {
           return (
             <ServiceItem
-              key={item}
+              key={index}
               title={item.title}
               desc={item.desc}
               icon={item.icon}

@@ -14,9 +14,13 @@ const FAQSection = () => {
       </div>
 
       <div className="flex flex-col gap-10 max-w-[1080px] mx-auto mt-10 md:mt-32 p-10">
-        {faqItems.map((item) => {
+        {faqItems.map((item, index) => {
           return (
-            <FAQItem key={item} question={item.question} answer={item.answer} />
+            <FAQItem
+              key={index}
+              question={item.question}
+              answer={item.answer}
+            />
           );
         })}
       </div>

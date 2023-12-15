@@ -6,8 +6,12 @@ import instagram from '../assets/instagram.svg';
 import Image from 'next/image';
 import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
+  const currentPath = usePathname();
+  console.log(currentPath);
+
   return (
     <div className="bg-[#2C3E50] flex flex-col gap-5  lg:flex-row  items-center  justify-evenly p-5  overflow-hidden text-white  ">
       <div className="flex flex-col items-center  lg:items-start mx-auto">
@@ -32,26 +36,30 @@ const Footer = () => {
       <div className="flex flex-col gap-5 mx-auto text-center">
         <h1 className="text-xl mt-6  font-semibold  ">Nützliche Links</h1>
         <ul className="flex flex-col gap-2">
-          <li className="cursor-pointer">
-            <ScrollLink to="vision" smooth={true} duration={800}>
-              Unsere Vision
-            </ScrollLink>
-          </li>
-          <li className="cursor-pointer">
-            <ScrollLink to="service" smooth={true} duration={800}>
-              Unser Service
-            </ScrollLink>
-          </li>
-          <li className="cursor-pointer">
-            <ScrollLink to="fuq" smooth={true} duration={800}>
-              FUQ
-            </ScrollLink>
-          </li>
-          <li className="cursor-pointer">
-            <ScrollLink to="contact" smooth={true} duration={800}>
-              Kontakt
-            </ScrollLink>
-          </li>
+          {['Vision', 'Service', 'FAQ', 'Kontakt'].map((item, index) => {
+            return currentPath == '/' ? (
+              <li key={index} className="cursor-pointer">
+                <ScrollLink
+                  to={item == 'Kontakt' ? 'contact' : item.toLowerCase()}
+                  smooth={true}
+                  duration={800}
+                >
+                  {item}
+                </ScrollLink>
+              </li>
+            ) : (
+              <li key={index} className="cursor-pointer">
+                <Link
+                  href={`/#${
+                    item == 'Kontakt' ? 'contact' : item.toLowerCase()
+                  }`}
+                >
+                  {item}
+                </Link>
+              </li>
+            );
+          })}
+
           <li className="cursor-pointer">
             <Link href="/Impressum">Impressum</Link>
           </li>

@@ -25,7 +25,7 @@ const Vision = forwardRef(({ inView }, ref) => {
       {visionItems.map((item, index) => {
         return (
           <motion.div
-            key={item}
+            key={index}
             initial={{ opacity: 0, y: 100 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3 * index, duration: 0.6 }}

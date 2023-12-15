@@ -61,18 +61,21 @@ export default function Home() {
 
   const formList = [
     <CountryForm
+      key={1}
       inputValue={formInput.country}
       onInputChange={handleSelectChange}
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
     />,
     <DurationForm
+      key={2}
       inputValue={formInput.travelDuration}
       onInputChange={handleInput}
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
     />,
     <MedicationForm
+      key={3}
       formInput={formInput}
       handleSelectChange={handleMedDefaultOpt}
       handleInput={handleInput}
@@ -86,6 +89,7 @@ export default function Home() {
       handleMedChange={handleMedChange}
     />,
     <NotifyForm
+      key={4}
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
       endForm={finalForm}
