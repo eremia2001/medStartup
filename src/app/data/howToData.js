@@ -7,11 +7,11 @@ const checklistItems = [
   },
   {
     title: 'Medikamente eingeben',
-    desc: 'Wählen Sie einfach die Medikamente aus, die Sie mitnehmen möchten, aus unserer umfangreichen Datenbank aus.',
+    desc: 'Wählen Sie einfach die Medikamente aus unserer umfangreichen Datenbank aus, die Sie auf Ihre Reise mitnehmen möchten.',
   },
   {
     title: 'Überprüfung erhalten',
-    desc: 'Finden Sie heraus, welche Medikamente Sie sicher mitnehmen können und welche eventuell Einschränkungen oder Verbote bestehen',
+    desc: 'Finden Sie heraus, welche Medikamente Sie sicher mitnehmen können bei welchen Einschränkungen oder Verbote vorliegen.',
   },
 ];
 

@@ -13,7 +13,7 @@ const FAQSection = () => {
         </p>
       </div>
 
-      <div className="flex flex-col gap-10 max-w-[1080px] mx-auto mt-10 md:mt-32 p-10">
+      <div className="flex flex-col gap-10 max-w-[1080px] mx-auto mt-10 md:mt-20 p-10">
         {faqItems.map((item, index) => {
           return (
             <FAQItem

@@ -296,7 +296,7 @@ export default function Home() {
         <motion.div
           className={`${
             showScrollButton ? 'cursor-pointer' : 'cursor-none'
-          } p-3 rounded-full fixed bottom-10 right-5 border border-[#D9D9D9] hover:bg-secondary shadow-md hover:text-white duration-300 ease-in-out`}
+          } p-3 rounded-full fixed bottom-10 right-5 border border-[#D9D9D9] bg-white hover:bg-secondary shadow-md hover:text-white duration-300 ease-in-out`}
           animate={
             showScrollButton ? { opacity: 1 } : { opacity: 0, display: 'none' }
           }

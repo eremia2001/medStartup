@@ -79,7 +79,7 @@ const Footer = () => {
         />
         <div className="flex flex-col gap-5 items-center md:items-start">
           <h1 className="font-semibold text-xl xl:text-2xl">
-            Bleiben Sie in Verbindung
+            Wir sind für sie da
           </h1>
           <div className="flex flex-col h-full justify-evenly gap-5 ">
             <p className="font-semibold">
