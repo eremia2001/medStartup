@@ -9,7 +9,7 @@ import Footer from './pageComponents/Footer';
 import Image from 'next/image';
 import { useState } from 'react';
 import { animate, motion } from 'framer-motion';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 const inter = Inter({ subsets: ['latin'] });
 
 // export const metadata: Metadata = {
