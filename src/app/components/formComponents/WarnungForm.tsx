@@ -1,11 +1,11 @@
-// components/GuteReiseForm.js
+// components/GrünForm.js
 import React from 'react';
 import Form from '../Form';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import Check from '../Check';
 import Hints from '../Hints';
 
-function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
+function GrünForm({ handleSumbitForm, handlePriorForm, medList }) {
   return (
     <Form
       title="Wichtige Reiseinformation "
@@ -23,8 +23,9 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
         <AiFillCloseCircle className=" my-auto text-[200px]" />
         <div className=" flex flex-col justify-center ">
           <p className="font-medium text-sm mb-5">
-            Der Wirkstoff für folgende Medikamente sind in Thailand verboten und
-            dürfen <span className="font-bold">nicht</span> mitgeführt werden:
+            Folgende Medikamente dürfen auf Grund ihrer Wirkstoffe{' '}
+            <span className="font-bold">nicht</span> nach Thailand eingeführt
+            werden
           </p>
 
           <div className="grid grid-cols-fluid gap-2 ">
@@ -36,14 +37,8 @@ function GuteReiseForm({ handleSumbitForm, handlePriorForm, medList }) {
           </div>
         </div>
       </div>
-      <h1 className="text-black font-semibold text-2xl mx-auto mt-8">
-        wichtige Hinweise
-      </h1>
-      <div className="mt-6 ">
-        <Hints />
-      </div>
     </Form>
   );
 }
 
-export default GuteReiseForm;
+export default GrünForm;

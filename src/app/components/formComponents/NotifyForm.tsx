@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  GuteReiseForm,
+  GrünForm,
   WarnungForm,
   GelbForm,
   GrünRotForm,
@@ -22,7 +22,7 @@ const NotifyForm = ({
   return (
     <>
       {(endForm === 'grün' && (
-        <GuteReiseForm handlePriorForm={handlePriorForm} medList={medList} />
+        <GrünForm handlePriorForm={handlePriorForm} medList={medList} />
       )) ||
         (endForm == 'rot' && (
           <WarnungForm handlePriorForm={handlePriorForm} medList={medList} />

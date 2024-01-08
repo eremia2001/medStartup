@@ -2,10 +2,14 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Link from 'next/link';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { usePathname } from 'next/navigation';
-
+import { Link } from 'react-scroll';
+import Footer from './pageComponents/Footer';
+import Image from 'next/image';
+import { useState } from 'react';
+import { animate, motion } from 'framer-motion';
+import Navbar from './components/NavBar';
 const inter = Inter({ subsets: ['latin'] });
 
 // export const metadata: Metadata = {
@@ -22,34 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={inter.className}>
-        {pathname !== '/Login' && (
-          <header className="flex w-full h-max justify-between items-center p-2  bg-slate-100 shadow-lg ">
-            <div>
-              <h2 className="font-bold text-2xl">MEDICARRY.</h2>
-            </div>
-
-            <ul className="hidden md:flex gap-5 font-medium">
-              <li>
-                <Link href="/">Funktionen</Link>
-              </li>
-              <li>
-                <Link href="/">Preise</Link>
-              </li>
-              <li>
-                <Link href="/">Über uns</Link>
-              </li>
-            </ul>
-            <Link href="/Login">
-              <button
-                className={`hidden md:block bg-primary text-md text-white rounded-md px-3 py-2`}
-              >
-                Anmelden
-              </button>
-            </Link>
-            <RxHamburgerMenu size={25} className="md:hidden cursor-pointer" />
-          </header>
-        )}
-        {children}
+        <main className="flex flex-col relative min-h-screen">
+          {pathname !== '/Login' && <Navbar />}
+          <div className="flex-grow flex-1 ">{children}</div>
+          <Footer />
+        </main>
       </body>
     </html>
   );

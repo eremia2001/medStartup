@@ -9,7 +9,7 @@ const Hints = () => {
       </li>
       <li>
         Überprüfen Sie, ob für Ihre Medikamente besondere{' '}
-        <span className="font-bold">Lagerbedingungen</span>
+        <span className="font-bold">Lagerbedingungen </span>
         erforderlich sind, z.B. Kühlung{' '}
       </li>
       <li>

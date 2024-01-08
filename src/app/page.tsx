@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import WomanIlustration from './assets/illustration woman.png';
 import WomanIlustration2 from './assets/illustration woman2.png';
+import earth3d from './assets/earth3d.png';
+import plane from './assets/airplane.jpg';
 import crosses from './assets/kreuze.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,9 +14,18 @@ import { useMedOptions } from './hooks/useMedOptions';
 import { useFinalForm } from './hooks/useFinalForm';
 import { fetchMedicationStatus } from '../app/utils/api';
 import { Nunito } from 'next/font/google';
-import { Line } from 'rc-progress';
-
+import Demo from './pageComponents/Demo';
+import HowTo from './pageComponents/HowTo';
+import Vision from './pageComponents/Vision';
 import { useToast } from './hooks/useToast';
+import Title from './components/Title';
+import Service from './pageComponents/Service';
+import Contact from './pageComponents/Contact';
+import { MdKeyboardArrowUp } from 'react-icons/md';
+import FAQSection from './pageComponents/FAQSection';
+import Footer from './pageComponents/Footer';
+import { Link as Link2 } from 'react-scroll';
+
 import {
   CountryForm,
   DurationForm,
@@ -23,6 +34,8 @@ import {
 } from './components/formComponents';
 import { useEffect, useState } from 'react';
 import { resolve } from 'path';
+import { useInView } from 'react-intersection-observer';
+import Link from 'next/link';
 const inter = Nunito({
   subsets: ['latin'],
   display: 'swap',
@@ -31,6 +44,8 @@ const inter = Nunito({
 export default function Home() {
   const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
   const { showToast } = useToast();
   const { checkFinalForm, finalForm } = useFinalForm();
   const {
@@ -47,18 +62,21 @@ export default function Home() {
 
   const formList = [
     <CountryForm
+      key={1}
       inputValue={formInput.country}
       onInputChange={handleSelectChange}
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
     />,
     <DurationForm
+      key={2}
       inputValue={formInput.travelDuration}
       onInputChange={handleInput}
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
     />,
     <MedicationForm
+      key={3}
       formInput={formInput}
       handleSelectChange={handleMedDefaultOpt}
       handleInput={handleInput}
@@ -72,6 +90,7 @@ export default function Home() {
       handleMedChange={handleMedChange}
     />,
     <NotifyForm
+      key={4}
       handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
       endForm={finalForm}
@@ -89,6 +108,22 @@ export default function Home() {
   useEffect(() => {
     checkFinalForm(apiResult);
   }, [apiResult]);
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollTop);
+    return () => {
+      window.removeEventListener('scroll', checkScrollTop);
+    };
+  }, [showScrollButton]);
+
+  const checkScrollTop = () => {
+    if (!showScrollButton && window.pageYOffset > 300) {
+      // Zeige den Button, wenn der Nutzer mehr als 300px gescrollt hat
+      setShowScrollButton(true);
+    } else if (showScrollButton && window.pageYOffset <= 300) {
+      // Verberge den Button, wenn der Nutzer weniger als 300px gescrollt hat
+      setShowScrollButton(false);
+    }
+  };
 
   function handleMedDefaultOpt(value, name) {
     handleSelectChange(value, name);
@@ -154,9 +189,18 @@ export default function Home() {
     checkFinalForm(apiResult);
   }, [allMeds]);
 
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1, // Ändern Sie den Threshold-Wert nach Bedarf
+  });
+  const [ref2, inView2] = useInView({
+    triggerOnce: true,
+    threshold: 0.01, // Ändern Sie den Threshold-Wert nach Bedarf
+  });
   return (
     <main
       className={`flex min-h-screen p-4 pb-10 flex-col bg-[#F9F9F9] relative  ${inter.className}`}
+      id="demo"
     >
       <ToastContainer />
       <AnimatePresence>
@@ -181,7 +225,7 @@ export default function Home() {
                 height={500}
                 className=" w-[16vw]  absolute top-20 right-10 hidden xl:block"
               />
-              <Image
+              {/* <Image
                 src={WomanIlustration}
                 alt="."
                 width={200}
@@ -194,14 +238,14 @@ export default function Home() {
                 width={500}
                 height={500}
                 className="absolute bottom-20 right-2 hidden xl:block z-0"
-              />
+              /> */}
               <div className="flex flex-col items-center gap-2 mx-auto mt-10 text-center  ">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
-                  Willkommen bei MediCarry !{' '}
-                </h1>
+                <Title title="Willkommen bei moouv ! " />
+
                 <h2 className="text-3xl  md:text-4xl lg:text-5xl font-bold">
                   <span className="text-primary">Reisen</span> leicht gemacht{' '}
                 </h2>
+
                 <p className="text-subline  lg:text-lg ">
                   Informieren, einpacken und los! Ihr Gesundheitsbegleiter auf
                   jeder Reise.
@@ -213,23 +257,25 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence mode="wait">
+      <Demo formNumber={formNumber} formList={formList} />
+      <HowTo inView={inView} ref={ref} />
+      <Vision inView={inView2} ref={ref2} />
+      <Service />
+      <FAQSection />
+      <Contact />
+      <Link2 to="demo" smooth={true} duration={300}>
         <motion.div
-          className="mx-auto w-full mt-20 lg:mt-28"
-          key={formNumber}
-          initial={{ x: -300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 300, opacity: 0 }}
+          className={`${
+            showScrollButton ? 'cursor-pointer' : 'cursor-none'
+          } p-3 rounded-full fixed bottom-10 right-5 border border-[#D9D9D9] bg-white hover:bg-secondary shadow-md hover:text-white duration-300 ease-in-out`}
+          animate={
+            showScrollButton ? { opacity: 1 } : { opacity: 0, display: 'none' }
+          }
+          transition={{ duration: 0.3 }}
         >
-          {formList[formNumber - 1]}
+          <MdKeyboardArrowUp size={20} />
         </motion.div>
-      </AnimatePresence>
-      <Line
-        percent={(formNumber / formList.length) * 100}
-        strokeWidth={1}
-        strokeColor="#6C63FF"
-        className="max-w-[1080px] mx-auto "
-      />
+      </Link2>
     </main>
   );
 }
