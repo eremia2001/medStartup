@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useMedication } from './hooks/useMedication';
 import { useFormHandling } from './hooks/useFormHandling';
 import { useMedOptions } from './hooks/useMedOptions';
+import { useFinalForm } from './hooks/useFinalForm';
 import { fetchMedicationStatus } from '../app/utils/api';
 import { Nunito } from 'next/font/google';
 import { Line } from 'rc-progress';
@@ -28,10 +29,10 @@ const inter = Nunito({
 });
 
 export default function Home() {
-  const [finalForm, setFinalForm] = useState('');
   const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
   const { showToast } = useToast();
+  const { checkFinalForm, finalForm } = useFinalForm();
   const {
     formInput,
     handleSelectChange,
@@ -86,39 +87,8 @@ export default function Home() {
     setDefaultOptions();
   }, []);
   useEffect(() => {
-    checkFormSwitch();
+    checkFinalForm(apiResult);
   }, [apiResult]);
-
-  function checkFormSwitch() {
-    const isEveryRed = apiResult.every((element) => {
-      return element.status == 'rot';
-    });
-    const isGelb = apiResult.find((element) => {
-      return element.status == 'gelb';
-    });
-    const isOneRed = apiResult.find((element) => {
-      return element.status == 'rot';
-    });
-    const isOrange = apiResult.find((element) => {
-      return element.status == 'orange';
-    });
-
-    if (isEveryRed) {
-      setFinalForm('rot');
-    } else if (isGelb) {
-      setFinalForm('gelb');
-    } else if (isOrange) {
-      setFinalForm('gelb');
-    } else {
-      if (allMeds.length > 0 && !isOneRed) {
-        setFinalForm('grün');
-      } else {
-        if (allMeds.length && isOneRed) {
-          setFinalForm('grünrot');
-        }
-      }
-    }
-  }
 
   function handleMedDefaultOpt(value, name) {
     handleSelectChange(value, name);
@@ -163,7 +133,7 @@ export default function Home() {
     try {
       const data = loadData();
       data.then((result) => setApiResult(result));
-      checkFormSwitch();
+      checkFinalForm(apiResult);
       switchToNextForm();
     } catch (error) {
       showToast('😦 Fehler beim Abrufen des Medikamentenstatus');
@@ -181,7 +151,7 @@ export default function Home() {
   useEffect(() => {
     const data = loadData();
     data.then((result) => setApiResult(result));
-    checkFormSwitch();
+    checkFinalForm(apiResult);
   }, [allMeds]);
 
   return (
