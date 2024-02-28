@@ -1,6 +1,7 @@
 // KontaktForm.js
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
+import { useToast } from '../hooks/useToast';
 
 const ContactForm = () => {
   const [errors, setErrors] = useState({});
@@ -11,6 +12,7 @@ const ContactForm = () => {
   });
   const { name, email, message } = formFields;
   const [submitStatus, setSubmitStatus] = useState(null);
+  const { showToast } = useToast();
   const serviceId = process.env.SERVICEID;
   const templateID = process.env.TEMPLATEID;
   const userID = process.env.USERID;
@@ -34,7 +36,7 @@ const ContactForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -42,17 +44,20 @@ const ContactForm = () => {
       return;
     }
 
-    emailjs.send(serviceId, templateID, { name, email, message }, userID).then(
-      (response) => {
-        console.log('SUCCESS!', response);
-        setSubmitStatus('success');
-        setFormFields({ name: '', email: '', message: '' });
-      },
-      (error) => {
-        console.log('FAILED...', error);
-        setSubmitStatus('error');
-      }
-    );
+    try {
+      const response = await emailjs.send(
+        serviceId,
+        templateID,
+        { name, email, message },
+        userID
+      );
+      console.log('SUCCESS!', response);
+      showToast('Email wurde erfolgreich gesendet', 'success');
+      setFormFields({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('FAILED...', error);
+      showToast('Es gab ein Fehler beim Versenden der Email', 'error');
+    }
   };
 
   return (
