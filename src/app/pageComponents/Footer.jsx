@@ -28,9 +28,11 @@ const Footer = () => {
           <h1 className="text-xl font-semibold mt-5 lg:mt-10 ">
             Noch nicht überzeugt ?{' '}
           </h1>
-          <button className="bg-primary rounded-md px-10 py-2 mt-2 ">
-            Jetzt testen
-          </button>
+          <a href="/">
+            <button className="bg-primary rounded-md px-10 py-2 mt-2 ">
+              Jetzt testen
+            </button>
+          </a>
         </div>
       </div>
       <div className="flex flex-col gap-5 mx-auto text-center">
@@ -83,7 +85,7 @@ const Footer = () => {
           </h1>
           <div className="flex flex-col h-full justify-evenly gap-5 ">
             <p className="font-semibold">
-              Email : <span className="font-light">moouve@web.de</span>
+              Email : <span className="font-light">moouv@web.de</span>
             </p>
             <p className="font-semibold">
               Telefon : <span className="font-light">0176/2893 1829</span>
@@ -96,7 +98,7 @@ const Footer = () => {
                 alt="linkedin"
                 className="w-10"
               />
-              <p>Moouve</p>
+              <p>moouv</p>
             </div>
             <div className="flex flex-row items-center gap-2 mx-auto translate-x-2 ">
               <Image
@@ -106,7 +108,7 @@ const Footer = () => {
                 alt="instagram"
                 className="w-10"
               />
-              <p>@moouve</p>
+              <p>@moouv</p>
             </div>
           </div>
         </div>

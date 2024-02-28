@@ -1,11 +1,19 @@
 // KontaktForm.js
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 
 const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [formFields, setFormFields] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const { name, email, message } = formFields;
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const validateForm = () => {
     let tempErrors = {};
@@ -18,12 +26,41 @@ const ContactForm = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    console.log('AKLSJD');
+    setFormFields({
+      ...formFields,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Hier Logik zum Senden der Formulardaten einfügen
-      console.log({ name, email, message });
+
+    if (!validateForm()) {
+      setSubmitStatus('error');
+      return;
     }
+
+    emailjs
+      .send(
+        'service_lehow4p', // Ersetzen Sie dies durch process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+        'template_gmnou0h', // Ersetzen Sie dies durch process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+        { name, email, message },
+        '1YLlzwIiVK5K-aoaF' // Ersetzen Sie dies durch process.env.NEXT_PUBLIC_EMAILJS_USER_ID
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response);
+          setSubmitStatus('success');
+          setFormFields({ name: '', email: '', message: '' }); // Formular zurücksetzen
+        },
+        (error) => {
+          console.log('FAILED...', error);
+          setSubmitStatus('error');
+        }
+      );
   };
 
   return (
@@ -33,10 +70,11 @@ const ContactForm = () => {
           <p className="font-light">Name</p>
           <input
             type="text"
-            className="py-2 px-4 border border-gray-300 rounded-xl  w-full outline-none shadow-lg hover:scale-105 duration-200"
+            name="name"
+            className="py-2 px-4 border border-gray-300 rounded-xl  w-full outline-none shadow-lg  duration-200"
             placeholder="Max Mustermann"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formFields.name}
+            onChange={handleInputChange}
           />
           {errors.name && (
             <p className="text-red-500 text-xs mt-1">{errors.name}</p>
@@ -46,10 +84,11 @@ const ContactForm = () => {
           <p className="font-light">Email</p>
           <input
             type="email"
-            className="py-2 px-4 border border-gray-300 rounded-xl w-full outline-none shadow-lg hover:scale-105 duration-200 "
+            name="email"
+            className="py-2 px-4 border border-gray-300 rounded-xl w-full outline-none shadow-lg  duration-200 "
             placeholder="Ihre E-Mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formFields.email}
+            onChange={handleInputChange}
           />
           {errors.email && (
             <p className="text-red-500 text-xs mt-1">{errors.email}</p>
@@ -59,11 +98,12 @@ const ContactForm = () => {
           <p className="font-light">Nachricht</p>
 
           <textarea
-            className="py-2 px-4 border border-gray-300 rounded-xl  w-full outline-none shadow-lg hover:scale-105 duration-200"
+            className="py-2 px-4 border border-gray-300 rounded-xl  w-full outline-none shadow-lg duration-200"
             placeholder="Ihre Nachricht"
             rows="4"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            name="message"
+            onChange={handleInputChange}
           ></textarea>
           {errors.message && (
             <p className="text-red-500 text-xs mt-1">{errors.message}</p>

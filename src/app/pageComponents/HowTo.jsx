@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import HowToItem from '../components/HowToItem';
 import howToData from '../data/howToData';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+//import { useInView } from 'react-intersection-observer';
 
 const HowTo = forwardRef(({ inView }, ref) => {
   return (

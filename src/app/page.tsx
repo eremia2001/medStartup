@@ -45,6 +45,7 @@ export default function Home() {
   const [apiResult, setApiResult] = useState([]);
   const { allMeds, addMedication, deleteMed, errorMsg } = useMedication();
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const { showToast } = useToast();
   const { checkFinalForm, finalForm } = useFinalForm();
@@ -91,20 +92,26 @@ export default function Home() {
     />,
     <NotifyForm
       key={4}
-      handleSumbitForm={switchToNextForm}
       handlePriorForm={switchToPriorForm}
       endForm={finalForm}
       medList={allMeds}
       apiResult={apiResult}
       deleteMed={deleteMed}
     />,
-
-    // Eine gemeinsame Form - KOmponente für alle 3 Farben ?
   ];
 
   useEffect(() => {
-    setDefaultOptions();
+    // Setzt den isClient-Status, sobald der Client geladen ist
+    setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    // Diese Logik wird nur auf dem Client ausgeführt
+    if (isClient) {
+      setDefaultOptions();
+      showToast('Achtung ! unser Demo ist zurzeit in der Beta-Version');
+    }
+  }, [isClient]); // Abhängigkeit von isClient
   useEffect(() => {
     checkFinalForm(apiResult);
   }, [apiResult]);
@@ -125,7 +132,7 @@ export default function Home() {
     }
   };
 
-  function handleMedDefaultOpt(value, name) {
+  function handleMedDefaultOpt(value: Number, name: String) {
     handleSelectChange(value, name);
     setDefaultOptions();
   }
