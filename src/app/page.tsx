@@ -122,6 +122,14 @@ export default function Home() {
     };
   }, [showScrollButton]);
 
+  useEffect(() => {
+    formNumber == 3
+      ? showToast(
+          'Bitte beachten Sie, dass die derzeitige Version der Software nur ein Demo ist und somit wir nur Mockdaten verwenden '
+        )
+      : '';
+  }, [formNumber]);
+
   const checkScrollTop = () => {
     if (!showScrollButton && window.pageYOffset > 300) {
       // Zeige den Button, wenn der Nutzer mehr als 300px gescrollt hat
