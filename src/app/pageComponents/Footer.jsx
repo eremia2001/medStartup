@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 
 const Footer = () => {
   const currentPath = usePathname();
-  console.log(currentPath);
+  console.log('HALLOO VON FOOTER : ', process.env.testKey);
 
   return (
     <div className="bg-[#2C3E50] flex flex-col gap-5  lg:flex-row  items-center  justify-evenly p-5  overflow-hidden text-white  ">
