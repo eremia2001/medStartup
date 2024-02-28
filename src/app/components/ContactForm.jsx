@@ -3,9 +3,6 @@ import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 
 const ContactForm = () => {
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
   const [formFields, setFormFields] = useState({
     name: '',
@@ -14,6 +11,9 @@ const ContactForm = () => {
   });
   const { name, email, message } = formFields;
   const [submitStatus, setSubmitStatus] = useState(null);
+  const serviceId = process.env.SERVICEID;
+  const templateID = process.env.TEMPLATEID;
+  const userID = process.env.USERID;
 
   const validateForm = () => {
     let tempErrors = {};
@@ -28,7 +28,6 @@ const ContactForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log('AKLSJD');
     setFormFields({
       ...formFields,
       [name]: value,
@@ -43,24 +42,17 @@ const ContactForm = () => {
       return;
     }
 
-    emailjs
-      .send(
-        'service_lehow4p', // Ersetzen Sie dies durch process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-        'template_gmnou0h', // Ersetzen Sie dies durch process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
-        { name, email, message },
-        '1YLlzwIiVK5K-aoaF' // Ersetzen Sie dies durch process.env.NEXT_PUBLIC_EMAILJS_USER_ID
-      )
-      .then(
-        (response) => {
-          console.log('SUCCESS!', response);
-          setSubmitStatus('success');
-          setFormFields({ name: '', email: '', message: '' }); // Formular zurücksetzen
-        },
-        (error) => {
-          console.log('FAILED...', error);
-          setSubmitStatus('error');
-        }
-      );
+    emailjs.send(serviceId, templateID, { name, email, message }, userID).then(
+      (response) => {
+        console.log('SUCCESS!', response);
+        setSubmitStatus('success');
+        setFormFields({ name: '', email: '', message: '' });
+      },
+      (error) => {
+        console.log('FAILED...', error);
+        setSubmitStatus('error');
+      }
+    );
   };
 
   return (

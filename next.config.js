@@ -7,7 +7,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   env: {
-    TEST: process.env.TEST,
+    SERVICEID: process.env.SERVICEID,
+    TEMPLATEID: process.env.TEMPLATEID,
   },
 };
 
