@@ -9,6 +9,7 @@ const nextConfig = {
   env: {
     SERVICEID: process.env.SERVICEID,
     TEMPLATEID: process.env.TEMPLATEID,
+    USERID: process.env.USERID,
   },
 };
 
